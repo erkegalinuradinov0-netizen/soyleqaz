@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoyleQaz — Оқушылар зонасы (Т2)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-20" x-data="portalData()">
+
+    <!-- 1. Прогресс және Басқару Панелі -->
+    <header class="bg-white border-b border-emerald-100 px-4 py-3 sticky top-0 z-50 shadow-sm flex flex-wrap justify-between items-center gap-3">
+        <div class="flex items-center space-x-2">
+            <span class="text-xs font-bold text-slate-500">Сынып:</span>
+            <select x-model="selectedGrade" class="bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold rounded-lg px-2 py-1 outline-none">
+                <option value="1-4">1–4 сынып (A1)</option>
+                <option value="5-8">5–8 сынып (A2-B1)</option>
+                <option value="9-11">9–11 сынып (B1-B2)</option>
+            </select>
+        </div>
+
+        <div class="flex items-center space-x-4 text-xs font-bold">
+            <div class="flex items-center space-x-1 text-amber-600">
+                <span>🔥 <span x-text="streak"></span> күн</span>
+            </div>
+            <div class="flex items-center space-x-1 text-indigo-600">
+                <span>⭐ <span x-text="xp"></span> XP</span>
+            </div>
+            <div class="flex items-center space-x-1 text-yellow-600">
+                <span>🪙 <span x-text="coins"></span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Негізгі Контент -->
+    <main class="max-w-xl mx-auto p-4 space-y-6">
+
+        <!-- Негізгі Модульдерді Ауыстырғыш (Tabs) -->
+        <div class="grid grid-cols-3 sm:grid-cols-6 gap-1 bg-slate-200/70 p-1.5 rounded-2xl text-center">
+            <button @click="activeTab = 'words'" :class="activeTab === 'words' ? 'bg-white text-emerald-700 shadow-sm' : 'text-slate-600'" class="py-2 text-[11px] font-bold rounded-xl transition">Флеш-карта</button>
+            <button @click="activeTab = 'grammar'" :class="activeTab === 'grammar' ? 'bg-white text-emerald-700 shadow-sm' : 'text-slate-600'" class="py-2 text-[11px] font-bold rounded-xl transition">Грамматика</button>
+            <button @click="activeTab = 'speaking'" :class="activeTab === 'speaking' ? 'bg-white text-emerald-700 shadow-sm' : 'text-slate-600'" class="py-2 text-[11px] font-bold rounded-xl transition">Диалог</button>
+            <button @click="activeTab = 'reader'" :class="activeTab === 'reader' ? 'bg-white text-emerald-700 shadow-sm' : 'text-slate-600'" class="py-2 text-[11px] font-bold rounded-xl transition">Мәтін & Карта</button>
+            <button @click="activeTab = 'essay'" :class="activeTab === 'essay' ? 'bg-white text-emerald-700 shadow-sm' : 'text-slate-600'" class="py-2 text-[11px] font-bold rounded-xl transition">Эссе</button>
+            <button @click="activeTab = 'tests'" :class="activeTab === 'tests' ? 'bg-white text-emerald-700 shadow-sm' : 'text-slate-600'" class="py-2 text-[11px] font-bold rounded-xl transition">БЖБ/ТЖБ</button>
+        </div>
+
+        <!-- 1. ФЛЕШ-КАРТАЛАР БӨЛІМІ -->
+        <div x-show="activeTab === 'words'" class="space-y-4">
+            <div @click="flipped = !flipped" class="w-full h-72 bg-white rounded-3xl border-2 border-emerald-200 shadow-xl p-6 flex flex-col justify-between items-center text-center cursor-pointer transition">
+                <template x-if="!flipped">
+                    <div class="flex flex-col items-center justify-center h-full space-y-3">
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Қазақша сөз</span>
+                        <h2 class="text-3xl font-extrabold text-slate-800" x-text="words[wordIndex].kazakh"></h2>
+                        <p class="text-xs text-slate-400 italic">Аудару үшін картаны басыңыз</p>
+                    </div>
+                </template>
+                <template x-if="flipped">
+                    <div class="flex flex-col items-center justify-center h-full space-y-2">
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Орысша аудармасы</span>
+                        <h3 class="text-2xl font-bold text-slate-800" x-text="words[wordIndex].russian"></h3>
+                        <p class="text-xs text-slate-500">Синонимі: <b x-text="words[wordIndex].synonym"></b></p>
+                        <div class="bg-emerald-50 p-2 rounded-xl text-xs text-slate-600 italic mt-2" x-text="words[wordIndex].example"></div>
+                    </div>
+                </template>
+            </div>
+            <div class="flex justify-between">
+                <button @click="flipped = !flipped" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold px-4 py-2.5 rounded-xl transition">Аудару</button>
+                <button @click="nextWord" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-6 py-2.5 rounded-xl shadow-md transition">Келесі ➔</button>
+            </div>
+        </div>
+
+        <!-- 2. ГРАММАТИКА КОНСТРУКТОРЫ -->
+        <div x-show="activeTab === 'grammar'" class="bg-white rounded-3xl p-5 border border-slate-200 shadow-md space-y-4">
+            <h3 class="text-sm font-bold text-emerald-700 uppercase tracking-wide">Жалғаулар мен сөйлем құрастыру</h3>
+            <p class="text-xs text-slate-500">Берілген сөзді тиісті жалғаумен толықтырыңыз:</p>
+            <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100 space-y-3">
+                <p class="text-sm font-bold text-slate-800">Мектеп + <span class="text-emerald-600 underline">?</span> = (в школе)</p>
+                <div class="grid grid-cols-3 gap-2">
+                    <button @click="checkGrammar(false)" class="bg-white hover:bg-emerald-100 p-2 text-xs font-bold rounded-xl border border-emerald-200">ге</button>
+                    <button @click="checkGrammar(true)" class="bg-white hover:bg-emerald-100 p-2 text-xs font-bold rounded-xl border border-emerald-200">де</button>
+                    <button @click="checkGrammar(false)" class="bg-white hover:bg-emerald-100 p-2 text-xs font-bold rounded-xl border border-emerald-200">тен</button>
+                </div>
+                <p class="text-xs font-semibold" :class="grammarResult.includes('Дұрыс') ? 'text-green-600' : 'text-red-500'" x-text="grammarResult"></p>
+            </div>
+        </div>
+
+        <!-- 3. СИТУАЦИЯЛЫҚ ДИАЛОГ ТРЕНАЖЕРЫ -->
+        <div x-show="activeTab === 'speaking'" class="bg-white rounded-3xl p-5 border border-slate-200 shadow-md space-y-4">
+            <h3 class="text-sm font-bold text-emerald-700 uppercase tracking-wide">Ситуациялық диалог: Дүкенде</h3>
+            <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-100 text-xs">
+                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                    <p class="font-bold text-emerald-800">Сатушы:</p>
+                    <p class="text-slate-600">«Сәлеметсіз бе! Сізге не керек еді?»</p>
+                </div>
+                <div class="space-y-2 mt-3">
+                    <p class="font-semibold text-slate-500">Жауап таңдаңыз:</p>
+                    <button @click="dialogCorrect = true" class="w-full text-left bg-white hover:bg-emerald-50 p-2.5 rounded-xl border border-slate-200 text-slate-700 font-medium">1. Маған бір нан беріңізші.</button>
+                    <button @click="dialogCorrect = false" class="w-full text-left bg-white hover:bg-emerald-50 p-2.5 rounded-xl border border-slate-200 text-slate-700 font-medium">2. Менің атым Қожа.</button>
+                </div>
+                <template x-if="dialogCorrect !== null">
+                    <p class="text-xs font-bold mt-2" :class="dialogCorrect ? 'text-green-600' : 'text-red-500'" x-text="dialogCorrect ? 'Керемет! Дұрыс жауап (+10 XP)' : 'Қате, қайта көріңіз.'"></p>
+                </template>
+            </div>
+        </div>
+
+        <!-- 4. ӘДЕБИЕТ, ПАРАЛЛЕЛЬ МӘТІН ЖӘНЕ КЕЙІПКЕРЛЕР КАРТАСЫ (MIND MAP) -->
+        <div x-show="activeTab === 'reader'" class="space-y-4">
+            <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-md space-y-4">
+                <h3 class="text-sm font-bold text-emerald-700 uppercase tracking-wide text-center">Менің атым Қожа (Параллель оқу)</h3>
+                <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 text-sm space-y-2">
+                    <p class="text-slate-800 leading-relaxed">
+                        Сөмкемді арқама асып, <span @click="openModal('Сөмкемді', 'Мою сумку', 'Тәуелдік және табыс септік жалғауы')" class="bg-emerald-100 text-emerald-800 font-bold px-1 rounded cursor-pointer underline">сөмкемді</span> мектепке қарай жүгірдім.
+                    </p>
+                    <p class="text-xs text-slate-400 italic">Закинув сумку за спину, я побежал в школу.</p>
+                </div>
+            </div>
+
+            <!-- Кейіпкерлер картасы (Mind Map) -->
+            <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-md space-y-3">
+                <h3 class="text-xs font-bold text-emerald-700 uppercase tracking-wide">Кейіпкерлер картасы (Mind Map)</h3>
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-100 text-center">
+                        <b class="text-emerald-800 block text-sm">Қожа</b>
+                        <span class="text-slate-500">Басты кейіпкер, тентек бірақ ақкөңіл</span>
+                    </div>
+                    <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-100 text-center">
+                        <b class="text-emerald-800 block text-sm">Сұлтан</b>
+                        <span class="text-slate-500">Қожаның сыбайлас досы</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. ЭССЕ КОНСТРУКТОРЫ -->
+        <div x-show="activeTab === 'essay'" class="bg-white rounded-3xl p-5 border border-slate-200 shadow-md space-y-4">
+            <h3 class="text-sm font-bold text-emerald-700 uppercase tracking-wide">Эссе конструкторы</h3>
+            <div class="space-y-2">
+                <p class="text-xs text-slate-500 font-semibold">Клише фразалар:</p>
+                <div class="flex flex-wrap gap-1.5">
+                    <button @click="essayText += 'Бұл мәселе өте өзекті, себебі... '" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-[11px] font-semibold px-2.5 py-1.5 rounded-lg border border-emerald-200">Бұл мәселе өзекті...</button>
+                    <button @click="essayText += 'Біріншіден, айта кететініміз... '" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-[11px] font-semibold px-2.5 py-1.5 rounded-lg border border-emerald-200">Біріншіден...</button>
+                    <button @click="essayText += 'Қорытындылай келе... '" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-[11px] font-semibold px-2.5 py-1.5 rounded-lg border border-emerald-200">Қорытындылай келе...</button>
+                </div>
+            </div>
+            <textarea x-model="essayText" placeholder="Эссені осы жерге жазыңыз..." class="w-full h-32 p-3 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+            <button @click="copyEssay" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition">Мәтінді көшіру (+15 XP)</button>
+        </div>
+
+        <!-- 6. БЖБ / ТЖБ ОНЛАЙН СИМУЛЯТОРЫ -->
+        <div x-show="activeTab === 'tests'" class="bg-white rounded-3xl p-5 border border-slate-200 shadow-md space-y-4">
+            <h3 class="text-sm font-bold text-emerald-700 uppercase tracking-wide">БЖБ/ТЖБ Дайындық тесті</h3>
+            <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-100 text-xs">
+                <p class="font-bold text-slate-800">1. «Абай жолы» роман-эпопеясынын авторы кім?</p>
+                <div class="space-y-2">
+                    <button @click="testCorrect = false" class="w-full text-left bg-white p-2.5 rounded-xl border border-slate-200">А) Б. Соқпақбаев</button>
+                    <button @click="testCorrect = true" class="w-full text-left bg-white p-2.5 rounded-xl border border-slate-200">Б) М. Әуезов</button>
+                </div>
+                <template x-if="testCorrect !== null">
+                    <p class="text-xs font-bold mt-2" :class="testCorrect ? 'text-green-600' : 'text-red-500'" x-text="testCorrect ? 'Дұрыс! 10/10 дескриптор орындалды (+20 XP)' : 'Қате.'"></p>
+                </template>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Pop-up Сөздік модаль терезесі -->
+    <div x-show="modalOpen" class="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center p-4 z-50">
+        <div class="bg-white rounded-2xl p-5 max-w-xs w-full shadow-2xl space-y-3 text-center">
+            <h4 class="text-base font-bold text-emerald-700" x-text="modalWord"></h4>
+            <p class="text-xs text-slate-600">Аудармасы: <b x-text="modalTranslation"></b></p>
+            <p class="text-[11px] text-slate-400 bg-slate-50 p-2 rounded-lg" x-text="modalContext"></p>
+            <button @click="modalOpen = false" class="w-full bg-emerald-600 text-white text-xs font-bold py-2 rounded-xl">Жабу</button>
+        </div>
+    </div>
+
+    <script>
+        function portalData() {
+            return {
+                activeTab: 'words',
+                selectedGrade: '5-8',
+                xp: 340,
+                coins: 50,
+                streak: 5,
+                wordIndex: 0,
+                flipped: false,
+                essayText: '',
+                grammarResult: '',
+                dialogCorrect: null,
+                testCorrect: null,
+                modalOpen: false,
+                modalWord: '',
+                modalTranslation: '',
+                modalContext: '',
+                words: [
+                    { kazakh: 'Отбасы', russian: 'Семья', synonym: 'Жанұя', example: 'Менің отбасым үлкен.' },
+                    { kazakh: 'Достық', russian: 'Дружба', synonym: 'Жолдастық', example: 'Шын достық мәңгі.' },
+                    { kazakh: 'Мұра', russian: 'Наследие', synonym: 'Өсиет', example: 'Абай сөзі — асыл мұра.' }
+                ],
+                nextWord() {
+                    this.flipped = false;
+                    this.wordIndex = (this.wordIndex + 1) % this.words.length;
+                    this.xp += 5;
+                },
+                checkGrammar(isCorrect) {
+                    if(isCorrect) {
+                        this.grammarResult = 'Дұрыс! Мектеп+де (Жатыс септік)';
+                        this.xp += 10;
+                    } else {
+                        this.grammarResult = 'Қате. Қайта көріңіз.';
+                    }
+                },
+                copyEssay() {
+                    navigator.clipboard.writeText(this.essayText);
+                    this.xp += 15;
+                    alert('Эссе көшірілді және +15 XP қосылды!');
+                },
+                openModal(word, trans, context) {
+                    this.modalWord = word;
+                    this.modalTranslation = trans;
+                    this.modalContext = context;
+                    this.modalOpen = true;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
