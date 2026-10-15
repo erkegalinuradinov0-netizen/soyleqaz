@@ -1,505 +1,537 @@
-
 <!DOCTYPE html>
 <html lang="kk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#176b58">
+<meta name="theme-color" content="#f7f6f2">
 <title>TilQanat — Қазақ тілі мен әдебиеті</title>
 <style>
-:root{--g:#176b58;--g2:#25866e;--bg:#f4f7f2;--ink:#19372d;--mut:#718078;--line:#e1e9e1;--gold:#f5ca64;--white:#fff}
+:root{--ink:#20231f;--muted:#777b72;--paper:#f7f6f2;--card:#fff;--green:#c8f169;--purple:#dcd4ff;--orange:#ffd4b8;--line:#e8e7df;--shadow:0 8px 30px #20231f0c}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-header{background:var(--g);color:white;padding:17px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{font-size:25px;font-weight:900}.logo span{color:var(--gold)}
-header small{opacity:.85}
-main{max-width:1120px;margin:auto;padding:22px 15px 50px}
-.hero{background:linear-gradient(130deg,#155a49,#2c9477);color:white;border-radius:23px;padding:27px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
-.hero h1{font-size:clamp(29px,5vw,44px);margin:12px 0}.hero p{line-height:1.6;color:#e4f4ec}
-.hero-art{font-size:85px}
-.eyebrow{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:800}
-.stats{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
-.stat{background:#ffffff18;border-radius:12px;padding:11px 15px;min-width:100px}.stat b{display:block;font-size:21px}.stat span{font-size:12px}
-.section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:28px 0 14px}
-h2{font-size:22px;margin:0}h3{margin:8px 0 12px}
-.muted{color:var(--mut);font-size:14px;line-height:1.55}
-.card{background:white;border:1px solid var(--line);border-radius:17px;padding:18px;min-width:0}
+button{cursor:pointer;border:0}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #8aa84a;outline-offset:2px}
+.app{max-width:1200px;margin:auto;padding:18px}
+.school-banner{background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px 17px;text-align:center;font-size:11px;font-weight:850;line-height:1.5;margin-bottom:14px}
+.school-author{font-size:12px;color:var(--muted);margin-top:5px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:23px}
+.logo{width:42px;height:42px;border-radius:14px;background:var(--green);display:grid;place-items:center;font-size:23px}
+.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill,.lang-switch{background:#fff;border:1px solid var(--line);border-radius:13px;padding:7px 10px;font-weight:800}
+.lang-switch{display:flex;gap:4px}
+.lang-btn{background:transparent;border-radius:8px;padding:5px 8px;font-weight:850;font-size:12px}
+.lang-btn.active{background:var(--ink);color:#fff}
+.hero{background:var(--green);border-radius:26px;padding:28px;display:grid;grid-template-columns:1.3fr .7fr;gap:16px;align-items:center}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:1.3px;font-weight:900}
+.hero h1{font-size:clamp(30px,5vw,50px);line-height:1.08;letter-spacing:-1.8px;margin:12px 0}
+.hero p{max-width:540px;color:#37412a}
+.hero-art{font-size:90px;text-align:center}
+.primary{background:var(--ink);color:white;border-radius:13px;padding:12px 17px;font-weight:850}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 28px}
+.stat,.panel,.tile{background:#fff;border:1px solid var(--line);border-radius:19px;padding:17px;box-shadow:var(--shadow)}
+.stat-head{color:var(--muted);font-size:13px;font-weight:750}
+.stat strong{display:block;font-size:26px;margin-top:3px}
+.progress{height:9px;background:#ecebe4;border-radius:99px;overflow:hidden;margin-top:8px}
+.progress span{display:block;height:100%;width:0;background:#98c94b}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:26px 0 13px}
+.section-head h2{font-size:23px;margin:0;letter-spacing:-.5px}
+.section-head p,.sub{color:var(--muted);margin:4px 0 0}
+.levels,.filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px}
+.filter{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:12px;font-weight:800}
+.filter.active{background:var(--ink);color:#fff;border-color:var(--ink)}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
-.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
-.level{background:white;border:2px solid var(--line);border-radius:15px;padding:14px;text-align:left;color:var(--ink)}
-.level.active{border-color:var(--g);background:#e8f4ed}
-.level b{display:block;font-size:17px;margin-bottom:5px}.level small{color:var(--mut)}
-.btn,.pill{border:1px solid var(--line);background:white;color:var(--ink);border-radius:11px;padding:10px 14px;font-weight:750}
-.btn.primary,.pill.active{background:var(--g);color:white;border-color:var(--g)}
-.btn.gold{background:var(--gold);border-color:var(--gold);color:#403516}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.nav{display:flex;gap:8px;overflow-x:auto;padding:3px 0 10px;margin-top:20px}
-.nav button{white-space:nowrap}
-.tag{display:inline-block;background:#e6f3eb;color:var(--g);border-radius:8px;padding:5px 9px;font-size:12px;font-weight:800}
-.panel{margin-top:12px}
+.tile{min-height:165px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;transition:transform .15s}
+.tile:hover{transform:translateY(-3px)}
+.tile-icon{width:49px;height:49px;border-radius:15px;display:grid;place-items:center;font-size:26px;margin-bottom:12px}
+.tile h3{margin:0;font-size:17px}
+.tile p{color:var(--muted);font-size:13px;margin:5px 0 12px}
+.tile-foot{margin-top:auto;display:flex;justify-content:space-between;width:100%;font-size:12px;font-weight:800;gap:5px}
+.badge{background:#f0efe9;padding:5px 8px;border-radius:8px}
+.visuals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 25px}
+.visual-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;text-align:center}
+.visual-card svg{width:100%;height:82px;max-width:155px;display:block;margin:0 auto 8px}
+.visual-card b{display:block}
+.visual-card span{font-size:12px;color:var(--muted)}
+.workspace{margin-top:18px}
+.panel{padding:22px}
+.panel-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.panel h2{margin:0;font-size:24px}
+.ghost,.small-btn{background:#f0efe9;padding:9px 12px;border-radius:12px;font-weight:800}
+.small-btn.dark{background:var(--ink);color:white}
+.word-card{max-width:580px;margin:14px auto 18px;min-height:255px;perspective:1000px;cursor:pointer}
+.flip-inner{position:relative;width:100%;min-height:255px;transform-style:preserve-3d;transition:transform .45s}
+.word-card.flipped .flip-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px;background:#fff}
+.face.back{transform:rotateY(180deg);background:#f0edff}
+.word-emoji{font-size:52px}
+.face h3{font-size:36px;margin:7px 0}
+.face p{color:var(--muted);margin:4px}
+.card-controls{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.answer-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:760px;margin:16px auto}
+.answer{border:1px solid var(--line);background:#fff;border-radius:13px;padding:13px;font-weight:800}
+.answer.correct{background:#dff8c1;border-color:#76a93c}
+.answer.wrong{background:#ffe0dc;border-color:#d96a5d}
+.notice{background:#f2f0e9;border-radius:13px;padding:12px;margin-top:12px}
+.reader-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.reader-col{background:#fbfaf7;border:1px solid var(--line);border-radius:15px;padding:16px}
+.reader-text{font-size:17px;line-height:2}
+.word{display:inline;border-radius:5px;padding:1px 3px;background:#e8f5c9;cursor:pointer;border:0}
+.translation{color:#5c6259}
+.dictionary{background:#fff1d9;padding:11px 12px;border-radius:12px;margin-top:12px;min-height:42px}
+.field-label{display:block;font-size:13px;font-weight:850;margin:10px 0 6px}
+.field,textarea,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+textarea{min-height:180px;resize:vertical}
+.essay-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:15px}
+.phrase-list{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.phrase{background:var(--purple);border-radius:10px;padding:8px 10px;font-size:13px;font-weight:750}
+.mic-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.recording{background:#ffe0dc!important;color:#8c241c!important}
+.audio-player{width:100%;margin-top:10px}
+.footer{color:var(--muted);text-align:center;padding:28px 0 10px;font-size:12px}
 .hidden{display:none!important}
-.progress{height:7px;background:#e6ede7;border-radius:9px;overflow:hidden;margin:12px 0}
-.progress div{height:100%;background:var(--g2);width:0;transition:width .2s}
-.flash{min-height:220px;background:white;border:2px solid #dcebe1;border-radius:20px;padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer}
-.flash h2{font-size:34px;margin:16px 0}
-.flash .translation{font-size:22px;color:var(--g)}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0}
-.options{display:grid;gap:9px;margin:13px 0}
-.option{padding:13px;text-align:left;border:1px solid var(--line);background:white;border-radius:11px;color:var(--ink)}
-.option.correct{background:#e5f6e9;border-color:#53a66d}.option.wrong{background:#fff0ed;border-color:#d76d60}
-.feedback{min-height:24px;font-weight:750;margin:10px 0;line-height:1.5}
-.notice{padding:13px;background:#fff6da;border-radius:12px;line-height:1.6;margin:12px 0}
-input,textarea,select{width:100%;padding:12px;border:1px solid #d8e3d9;border-radius:10px;background:white;color:var(--ink);margin:7px 0 13px}
-textarea{min-height:145px;line-height:1.7}
-label{font-weight:750;font-size:13px}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.chip{border:0;background:#e6f3eb;color:var(--g);border-radius:20px;padding:8px 11px}
-.reader{font-size:18px;line-height:2}
-.word{border-bottom:2px dotted #64a88b;cursor:pointer}
-.bubble{background:#e8f4ec;padding:12px;border-radius:13px;margin:9px 0;line-height:1.6}
-.bubble:nth-child(even){background:#fff1d0}
-.footer{text-align:center;color:var(--mut);font-size:12px;padding:30px 0}
-@media(max-width:700px){.grid{grid-template-columns:1fr 1fr}.hero{grid-template-columns:1fr}.hero-art{display:none}.levels{grid-template-columns:1fr}.level{padding:12px}.hero{padding:21px}}
-@media(max-width:440px){.grid{grid-template-columns:1fr}.stat{flex:1;min-width:80px;padding:9px}.flash h2{font-size:29px}}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:12px 18px;border-radius:13px;display:none;z-index:10;max-width:90vw}
+.toast.show{display:block}
+@media(max-width:760px){
+.app{padding:12px}.hero{grid-template-columns:1fr;padding:21px}.hero-art{font-size:60px;text-align:left}
+.stats{gap:7px}.stat{padding:11px}.stat strong{font-size:20px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.visuals{grid-template-columns:1fr}
+.reader-grid,.essay-layout{grid-template-columns:1fr}.panel{padding:15px}
+.answer-list{grid-template-columns:1fr}.topbar{align-items:flex-start}
+}
+@media(max-width:390px){.grid,.stats{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<header>
-  <div><div class="logo">Til<span>Qanat</span> ✦</div><small>Қазақ тілі мен әдебиеті · Оқушы порталы</small></div>
-  <button class="btn gold" onclick="resetAll()">Прогресті тазарту</button>
+<div class="app">
+
+<div class="school-banner">
+<div>“ЖАМБЫЛ ОБЛЫСЫ ӘКІМДІГІНІҢ БІЛІМ БАСҚАРМАСЫ ТАРАЗ ҚАЛАСЫНЫҢ БІЛІМ БӨЛІМІНІҢ № 40 ГИМНАЗИЯСЫ” КОММУНАЛДЫҚ МЕМЛЕКЕТТІК МЕКЕМЕСІ</div>
+<div class="school-author">Автор: Нурадинов Е.А.</div>
+</div>
+
+<header class="topbar">
+<div class="brand"><div class="logo">Қ</div><span>TilQanat<span style="color:#789a37">.</span></span></div>
+<div class="top-actions">
+<div class="lang-switch">
+<button class="lang-btn active" id="langKK" onclick="setLanguage('kk')">ҚАЗ</button>
+<button class="lang-btn" id="langRU" onclick="setLanguage('ru')">РУС</button>
+</div>
+<div class="pill">🔥 <span id="streak">1</span> <span data-kk="күн" data-ru="дн.">күн</span></div>
+<div class="pill">🪙 <span id="coins">0</span></div>
+<div class="pill">⚡ <span id="xp">0</span> XP</div>
+</div>
 </header>
-<main>
+
 <section class="hero">
- <div>
-  <div class="eyebrow">Өзіңнің оқу жолыңды баста</div>
-  <h1>Қазақ тілін<br>бірге үйренейік!</h1>
-  <p>Сөздік қорды байыт. Грамматиканы меңгер. Мәтінді талда. Қазақша еркін сөйлеуге қадам жаса.</p>
-  <button class="btn gold" onclick="showTab('vocab')">Оқуды бастау →</button>
-  <div class="stats">
-   <div class="stat"><b id="xp">0 XP</b><span>Жинаған ұпай</span></div>
-   <div class="stat"><b id="learned">0</b><span>Үйренген сөз</span></div>
-   <div class="stat"><b id="done">0</b><span>Орындалған тапсырма</span></div>
-  </div>
- </div>
- <div class="hero-art">📚🌿</div>
+<div>
+<div class="eyebrow" data-kk="Қазақ тілі · Т2 оқушыларына" data-ru="Казахский язык · для учащихся Т2">Қазақ тілі · Т2 оқушыларына</div>
+<h1><span data-kk="Қазақша үйрену" data-ru="Учить казахский">Қазақша үйрену</span><br><span data-kk="қызық болсын!" data-ru="должно быть интересно!">қызық болсын!</span></h1>
+<p data-kk="Сөз үйрен, мәтін оқы, эссе жаз. Әр тапсырма сені мақсатыңа жақындатады." data-ru="Учи слова, читай тексты, пиши эссе. Каждое задание приближает к цели.">Сөз үйрен, мәтін оқы, эссе жаз. Әр тапсырма сені мақсатыңа жақындатады.</p>
+<button class="primary" onclick="document.getElementById('activities').scrollIntoView({behavior:'smooth'})" data-kk="Оқуды бастау →" data-ru="Начать обучение →">Оқуды бастау →</button>
+</div>
+<div class="hero-art" aria-label="Оқу көрнекілігі">📚🌱🎓</div>
 </section>
 
-<div class="section-title"><h2>1. Оқу деңгейіңді таңда</h2><span class="muted">Мазмұн деңгейге қарай өзгереді</span></div>
+<section class="stats">
+<div class="stat"><div class="stat-head" data-kk="Тәжірибе ұпайы" data-ru="Очки опыта">Тәжірибе ұпайы</div><strong>⚡ <span id="xp2">0</span> XP</strong><small data-kk="Әр дұрыс тапсырмаға +10 XP" data-ru="+10 XP за задание">Әр дұрыс тапсырмаға +10 XP</small></div>
+<div class="stat"><div class="stat-head" data-kk="Апталық прогресс" data-ru="Прогресс за неделю">Апталық прогресс</div><strong><span id="progressText">0</span>%</strong><div class="progress"><span id="progressBar"></span></div></div>
+<div class="stat"><div class="stat-head" data-kk="Жетістік" data-ru="Достижения">Жетістік</div><strong>🏅 <span id="badgeCount">0</span></strong><small data-kk="Жинаған жетістіктер" data-ru="Полученные достижения">Жинаған жетістіктер</small></div>
+</section>
+
+<div class="section-head">
+<div><h2 data-kk="Көрнекіліктер" data-ru="Наглядные материалы">Көрнекіліктер</h2><p data-kk="Сурет арқылы есте сақта, сөзді мағынамен байланыстыр." data-ru="Запоминай слова с помощью наглядных материалов.">Сурет арқылы есте сақта, сөзді мағынамен байланыстыр.</p></div>
+</div>
+
+<div class="visuals">
+<div class="visual-card">
+<svg viewBox="0 0 160 90" role="img" aria-label="Ашық кітап">
+<path d="M15 22Q48 12 78 29V75Q45 58 15 68Z" fill="#dcd4ff" stroke="#6b5db5" stroke-width="2"/>
+<path d="M145 22Q112 12 82 29V75Q115 58 145 68Z" fill="#dff4bb" stroke="#71983d" stroke-width="2"/>
+<path d="M80 28V76" stroke="#4a4a4a" stroke-width="2"/>
+<path d="M28 35l37 5M28 45l37 5M95 38l36-5M95 48l36-5" stroke="#7a7a7a" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<b data-kk="📚 Сөздік қор" data-ru="📚 Словарный запас">📚 Сөздік қор</b><span data-kk="Сөз · аударма · мысал" data-ru="Слово · перевод · пример">Сөз · аударма · мысал</span>
+</div>
+<div class="visual-card">
+<svg viewBox="0 0 160 90" role="img" aria-label="Сөйлем құрастыру">
+<rect x="8" y="16" width="43" height="25" rx="8" fill="#dff4bb" stroke="#71983d"/>
+<rect x="58" y="16" width="43" height="25" rx="8" fill="#dcd4ff" stroke="#6b5db5"/>
+<rect x="108" y="16" width="43" height="25" rx="8" fill="#ffd9c2" stroke="#bd754c"/>
+<path d="M30 48v10h100V48M76 42v16" fill="none" stroke="#555" stroke-width="2"/>
+<text x="29" y="32" font-size="9" text-anchor="middle">Мен</text><text x="79" y="32" font-size="9" text-anchor="middle">кітап</text><text x="129" y="32" font-size="9" text-anchor="middle">оқыдым</text>
+<rect x="35" y="64" width="90" height="18" rx="7" fill="#f4f1e7" stroke="#aaa"/><text x="80" y="76" font-size="9" text-anchor="middle">Сөйлем реті</text>
+</svg>
+<b data-kk="🧩 Грамматика" data-ru="🧩 Грамматика">🧩 Грамматика</b><span data-kk="Сөздерді ретімен орналастыр" data-ru="Расположи слова по порядку">Сөздерді ретімен орналастыр</span>
+</div>
+<div class="visual-card">
+<svg viewBox="0 0 160 90" role="img" aria-label="Сөйлеу және тыңдау">
+<circle cx="45" cy="37" r="19" fill="#ffd9c2" stroke="#bd754c" stroke-width="2"/>
+<rect x="29" y="57" width="32" height="23" rx="10" fill="#dcd4ff"/>
+<path d="M76 25q18 12 0 24M85 18q28 19 0 38M96 11q38 26 0 52" fill="none" stroke="#71983d" stroke-width="3" stroke-linecap="round"/>
+<rect x="105" y="58" width="42" height="20" rx="8" fill="#dff4bb" stroke="#71983d"/>
+<path d="M116 65h20M116 71h14" stroke="#555" stroke-width="2"/>
+</svg>
+<b data-kk="🎙️ Айтылым" data-ru="🎙️ Устная речь">🎙️ Айтылым</b><span data-kk="Тыңда · қайтала · жазып ал" data-ru="Слушай · повторяй · записывай">Тыңда · қайтала · жазып ал</span>
+</div>
+</div>
+
+<div class="section-head" id="activities">
+<div><h2 data-kk="Оқу аймағы" data-ru="Учебная зона">Оқу аймағы</h2><p data-kk="Алдымен сыныбыңды таңда. Тапсырмалар деңгейге қарай өзгереді." data-ru="Сначала выбери класс. Задания меняются в зависимости от уровня.">Алдымен сыныбыңды таңда. Тапсырмалар деңгейге қарай өзгереді.</p></div>
+</div>
+
 <div class="levels">
- <button class="level active" data-level="a1" onclick="setLevel('a1')"><b>🌱 A1 · Бастапқы</b><small>1–4 сынып · Сөздер, қарапайым сөйлемдер, күнделікті тақырыптар</small></button>
- <button class="level" data-level="a2" onclick="setLevel('a2')"><b>🌿 A2–B1 · Орта</b><small>5–8 сынып · Грамматика, мәтін түсіну, диалог, пікір білдіру</small></button>
- <button class="level" data-level="b1" onclick="setLevel('b1')"><b>🌳 B1–B2 · Жоғары</b><small>9–11 сынып · Талдау, күрделі грамматика, аргументті жазылым</small></button>
-</div>
-<div class="card">
- <span class="tag" id="levelTag">A1 · Бастапқы деңгей</span>
- <h3 id="levelTitle">Алғашқы қадам</h3>
- <p class="muted" id="levelDescription">Күнделікті сөздерді үйреніп, қысқа сөйлемдер құрастыр.</p>
- <div class="grid">
-  <div><b id="vCount">30</b><div class="muted">Сөздік карточка</div></div>
-  <div><b id="gCount">20</b><div class="muted">Грамматика тапсырмасы</div></div>
-  <div><b id="rCount">10</b><div class="muted">Оқылым мәтіні</div></div>
-  <div><b id="qCount">30</b><div class="muted">Тест сұрағы</div></div>
-  <div><b id="wCount">10</b><div class="muted">Жазылым тақырыбы</div></div>
-  <div><b id="sCount">10</b><div class="muted">Айтылым жағдаяты</div></div>
- </div>
+<button class="filter active" data-level="1-4" onclick="setLevel('1-4',this)">1–4 сынып · A1</button>
+<button class="filter" data-level="5-8" onclick="setLevel('5-8',this)">5–8 сынып · A2–B1</button>
+<button class="filter" data-level="9-11" onclick="setLevel('9-11',this)">9–11 сынып · B1–B2</button>
 </div>
 
-<div class="nav">
- <button class="pill active" data-tab="vocab" onclick="showTab('vocab')">🃏 Сөздік</button>
- <button class="pill" data-tab="grammar" onclick="showTab('grammar')">🧩 Грамматика</button>
- <button class="pill" data-tab="reading" onclick="showTab('reading')">📖 Оқылым</button>
- <button class="pill" data-tab="quiz" onclick="showTab('quiz')">🎯 Тест</button>
- <button class="pill" data-tab="writing" onclick="showTab('writing')">✍️ Жазылым</button>
- <button class="pill" data-tab="speaking" onclick="showTab('speaking')">🗣️ Айтылым</button>
+<div class="grid" id="activityGrid">
+<button class="tile" onclick="openSection('words')"><div class="tile-icon" style="background:#dff4bb">🃏</div><h3 data-kk="Сөз карточкалары" data-ru="Карточки слов">Сөз карточкалары</h3><p data-kk="Сөзді жатта, аудармасын тексер." data-ru="Запоминай слова и проверяй перевод.">Сөзді жатта, аудармасын тексер.</p><div class="tile-foot"><span data-kk="Сөздік қор" data-ru="Словарный запас">Сөздік қор</span><span class="badge">+10 XP</span></div></button>
+<button class="tile" onclick="openSection('reader')"><div class="tile-icon" style="background:#dcd4ff">📖</div><h3 data-kk="Екітілді оқу" data-ru="Двуязычное чтение">Екітілді оқу</h3><p data-kk="Қазақша мәтін және орысша аударма." data-ru="Текст на казахском и перевод на русский.">Қазақша мәтін және орысша аударма.</p><div class="tile-foot"><span data-kk="Оқылым" data-ru="Чтение">Оқылым</span><span class="badge" data-kk="Мәтін" data-ru="Текст">Мәтін</span></div></button>
+<button class="tile" onclick="openSection('quiz')"><div class="tile-icon" style="background:#c9e9f8">🎯</div><h3 data-kk="Жылдам тест" data-ru="Быстрый тест">Жылдам тест</h3><p data-kk="Өз деңгейіңе сай сұрақтарға жауап бер." data-ru="Отвечай на вопросы своего уровня.">Өз деңгейіңе сай сұрақтарға жауап бер.</p><div class="tile-foot"><span data-kk="Тексеру" data-ru="Проверка">Тексеру</span><span class="badge" id="questionCount">10 сұрақ</span></div></button>
+<button class="tile" onclick="openSection('grammar')"><div class="tile-icon" style="background:#ffeaa0">🧩</div><h3 data-kk="Грамматика" data-ru="Грамматика">Грамматика</h3><p data-kk="Сөйлемдегі сөздердің орнын таңда." data-ru="Выбери правильный порядок слов.">Сөйлемдегі сөздердің орнын таңда.</p><div class="tile-foot"><span data-kk="Тілдік бағдар" data-ru="Языковая практика">Тілдік бағдар</span><span class="badge">+10 XP</span></div></button>
+<button class="tile" onclick="openSection('essay')"><div class="tile-icon" style="background:#ffd9c2">✍️</div><h3 data-kk="Эссе конструкторы" data-ru="Конструктор эссе">Эссе конструкторы</h3><p data-kk="Клише фразалармен өз ойыңды жаз." data-ru="Пиши эссе с помощью речевых клише.">Клише фразалармен өз ойыңды жаз.</p><div class="tile-foot"><span data-kk="Жазылым" data-ru="Письмо">Жазылым</span><span class="badge">+10 XP</span></div></button>
+<button class="tile" onclick="openSection('speaking')"><div class="tile-icon" style="background:#f7cfe0">🗣️</div><h3 data-kk="Сөйлесу тренажері" data-ru="Тренажёр речи">Сөйлесу тренажері</h3><p data-kk="Қазақша сөйле, микрофонмен жазып көр." data-ru="Говори по-казахски и попробуй запись с микрофона.">Қазақша сөйле, микрофонмен жазып көр.</p><div class="tile-foot"><span data-kk="Айтылым" data-ru="Говорение">Айтылым</span><span class="badge" data-kk="Диалог" data-ru="Диалог">Диалог</span></div></button>
 </div>
 
-<section id="vocab" class="panel">
- <div class="section-title"><h2>🃏 Сөздік карточкалары</h2><span class="muted" id="vocabPosition"></span></div>
- <div class="progress"><div id="vocabBar"></div></div>
- <div class="flash" onclick="flipWord()">
-  <span class="tag" id="wordTag">Қазақша сөз</span>
-  <h2 id="wordKK">Сәлем</h2>
-  <div id="wordRU" class="translation hidden">Привет</div>
-  <p id="wordEX" class="muted hidden"></p>
-  <small id="flipHint" class="muted">Аудармасын көру үшін карточканы бас</small>
- </div>
- <div class="actions">
-  <button class="btn" onclick="speakCurrent()">🔊 Тыңдау</button>
-  <button class="btn" onclick="moveWord(-1)">← Артқа</button>
-  <button class="btn primary" onclick="moveWord(1)">Келесі →</button>
-  <button class="btn gold" onclick="learnWord()">✓ Үйрендім (+5 XP)</button>
- </div>
- <div class="card">
-  <h3>Сөзді тексер</h3>
-  <p id="vocabQuestion">Қазақша сөздің аудармасын таңда.</p>
-  <div class="options" id="vocabOptions"></div>
-  <div class="feedback" id="vocabFeedback"></div>
- </div>
+<section class="workspace panel hidden" id="words">
+<div class="panel-top"><div><h2 data-kk="🃏 Сөз карточкалары" data-ru="🃏 Карточки слов">🃏 Сөз карточкалары</h2><p class="sub" data-kk="Карточканы аудар, тыңда немесе тест режимін таңда." data-ru="Переворачивай карточки, слушай или выбери режим теста.">Карточканы аудар, тыңда немесе тест режимін таңда.</p></div><button class="ghost" onclick="closeSections()" data-kk="← Басты бет" data-ru="← Главная">← Басты бет</button></div>
+<div class="filters"><button class="filter active" onclick="setWordMode('study',this)" data-kk="Жаттау" data-ru="Учить">Жаттау</button><button class="filter" onclick="setWordMode('quiz',this)" data-kk="Сөзді тап" data-ru="Найди слово">Сөзді тап</button><button class="filter" onclick="setWordMode('match',this)" data-kk="Жұбын тап" data-ru="Найди пару">Жұбын тап</button></div>
+<div id="wordArea"></div>
 </section>
 
-<section id="grammar" class="panel hidden">
- <div class="section-title"><h2>🧩 Грамматика зертханасы</h2><span class="muted" id="grammarPosition"></span></div>
- <div class="progress"><div id="grammarBar"></div></div>
- <div class="card">
-  <span class="tag" id="grammarTag">Жаттығу</span>
-  <h3 id="grammarQuestion"></h3>
-  <p class="muted" id="grammarHint"></p>
-  <div id="grammarOptions" class="options"></div>
-  <div class="feedback" id="grammarFeedback"></div>
-  <div class="actions">
-   <button class="btn primary" id="grammarNext" onclick="nextGrammar()" disabled>Келесі тапсырма →</button>
-  </div>
- </div>
- <div class="card" style="margin-top:12px">
-  <h3>📌 Еске сақта</h3>
-  <div id="ruleBox" class="notice"></div>
- </div>
+<section class="workspace panel hidden" id="reader">
+<div class="panel-top"><div><h2 data-kk="📖 Екітілді оқу" data-ru="📖 Двуязычное чтение">📖 Екітілді оқу</h2><p class="sub" data-kk="Жасыл сөзді басып, мағынасын біл." data-ru="Нажми на зелёное слово, чтобы увидеть значение.">Жасыл сөзді басып, мағынасын біл.</p></div><button class="ghost" onclick="closeSections()" data-kk="← Басты бет" data-ru="← Главная">← Басты бет</button></div>
+<div class="reader-grid"><article class="reader-col"><h3>🇰🇿 Қазақша мәтін</h3><div class="reader-text" id="kazText"></div></article><article class="reader-col"><h3>🇷🇺 Русский перевод</h3><div class="reader-text translation" id="ruText"></div></article></div>
+<div class="dictionary" id="dictionary">💡 Сөздің мағынасын көру үшін жасыл сөзді бас.</div>
+<div class="notice"><b data-kk="Түсіну сұрағы:" data-ru="Вопрос на понимание:">Түсіну сұрағы:</b> <span id="readerQuestion">Мәтін бойынша сұрақ.</span><div class="filters" id="readerAnswers"></div></div>
 </section>
 
-<section id="reading" class="panel hidden">
- <div class="section-title"><h2>📖 Оқылым және түсіну</h2><span class="muted" id="readingPosition"></span></div>
- <div class="progress"><div id="readingBar"></div></div>
- <div class="card">
-  <span class="tag" id="readingTag">Оқылым</span>
-  <h3 id="readingTitle"></h3>
-  <div id="readingText" class="reader"></div>
-  <div class="actions"><button class="btn" onclick="speakReading()">🔊 Мәтінді тыңдау</button><button class="btn" onclick="toggleRussian()">Русский перевод</button></div>
-  <div id="readingRussian" class="notice hidden"></div>
-  <div id="dictionary" class="notice">Белгіленген сөзді бассаң, түсіндірмесі көрсетіледі.</div>
- </div>
- <div class="card" style="margin-top:12px">
-  <h3 id="readingQuestion"></h3>
-  <div id="readingOptions" class="options"></div>
-  <div class="feedback" id="readingFeedback"></div>
-  <button class="btn primary" id="readingNext" onclick="nextReading()" disabled>Келесі мәтін →</button>
- </div>
+<section class="workspace panel hidden" id="quiz">
+<div class="panel-top"><div><h2 data-kk="🎯 Жылдам тест" data-ru="🎯 Быстрый тест">🎯 Жылдам тест</h2><p class="sub" data-kk="Әр дұрыс жауапқа +10 XP." data-ru="+10 XP за каждый правильный ответ.">Әр дұрыс жауапқа +10 XP.</p></div><button class="ghost" onclick="closeSections()" data-kk="← Басты бет" data-ru="← Главная">← Басты бет</button></div>
+<div id="quizArea"></div>
 </section>
 
-<section id="quiz" class="panel hidden">
- <div class="section-title"><h2>🎯 Білімді тексеру</h2><span class="muted" id="quizPosition"></span></div>
- <div class="progress"><div id="quizBar"></div></div>
- <div class="card">
-  <span class="tag">Деңгейлік тест</span>
-  <h3 id="quizQuestion"></h3>
-  <div id="quizOptions" class="options"></div>
-  <div id="quizFeedback" class="feedback"></div>
-  <button class="btn primary" id="quizNext" onclick="nextQuiz()" disabled>Келесі сұрақ →</button>
-  <button class="btn gold hidden" id="quizRestart" onclick="startQuiz()">Тестті қайта бастау</button>
- </div>
+<section class="workspace panel hidden" id="grammar">
+<div class="panel-top"><div><h2 data-kk="🧩 Грамматика зертханасы" data-ru="🧩 Лаборатория грамматики">🧩 Грамматика зертханасы</h2><p class="sub" data-kk="Сөздерді сөйлем ретімен бас." data-ru="Нажимай на слова в правильном порядке.">Сөздерді сөйлем ретімен бас.</p></div><button class="ghost" onclick="closeSections()" data-kk="← Басты бет" data-ru="← Главная">← Басты бет</button></div>
+<div class="reader-col"><div class="eyebrow" data-kk="Тапсырма" data-ru="Задание">Тапсырма</div><h3 id="grammarPrompt">Сөйлемді дұрыс құрастыр.</h3><div class="filters" id="grammarWords"></div><div class="notice" id="grammarFeedback">Сөздерді дұрыс ретпен таңда.</div><div class="card-controls"><button class="primary" onclick="checkGrammar()" data-kk="Тексеру" data-ru="Проверить">Тексеру</button><button class="small-btn" onclick="renderGrammar()" data-kk="Қайта бастау" data-ru="Начать заново">Қайта бастау</button></div></div>
 </section>
 
-<section id="writing" class="panel hidden">
- <div class="section-title"><h2>✍️ Жазылым шеберханасы</h2><span class="muted" id="writingPosition"></span></div>
- <div class="card">
-  <span class="tag" id="writingTag">Жазылым</span>
-  <h3 id="writingTitle"></h3>
-  <p id="writingInstructions" class="muted"></p>
-  <div class="notice" id="writingPlan"></div>
-  <label for="writingText">Жауабыңды жаз</label>
-  <textarea id="writingText" placeholder="Ойыңды қазақ тілінде жаз..."></textarea>
-  <div class="muted" id="writingCount">0 сөз</div>
-  <div class="actions">
-   <button class="btn primary" onclick="checkWriting()">Жұмысты тексеру</button>
-   <button class="btn" onclick="saveWriting()">Сақтау</button>
-   <button class="btn" onclick="nextWriting()">Келесі тақырып →</button>
-  </div>
-  <div class="feedback" id="writingFeedback"></div>
- </div>
- <div class="card" style="margin-top:12px">
-  <h3>Пайдалы тіркестер</h3>
-  <div id="writingChips" class="chips"></div>
-  <p class="muted">Тіркесті бассаң, мәтініңе қосылады.</p>
- </div>
+<section class="workspace panel hidden" id="essay">
+<div class="panel-top"><div><h2 data-kk="✍️ Эссе конструкторы" data-ru="✍️ Конструктор эссе">✍️ Эссе конструкторы</h2><p class="sub" data-kk="Клише фразаны бас — мәтінге қосылады." data-ru="Нажми на клише, чтобы добавить его в текст.">Клише фразаны бас — мәтінге қосылады.</p></div><button class="ghost" onclick="closeSections()" data-kk="← Басты бет" data-ru="← Главная">← Басты бет</button></div>
+<div class="essay-layout"><div>
+<label class="field-label" for="essayTopic" data-kk="Эссе тақырыбы" data-ru="Тема эссе">Эссе тақырыбы</label>
+<select class="field" id="essayTopic"><option>Кітап — білім бұлағы</option><option>Табиғатты қорғау</option><option>Менің арманым</option><option>Қазақ тілі — мемлекеттік тіл</option><option>Жастар және технология</option><option>Адам және қоршаған орта</option></select>
+<label class="field-label" data-kk="Клише фразалар" data-ru="Речевые клише">Клише фразалар</label><div class="phrase-list" id="phrases"></div>
+<button class="primary" onclick="addEssayTemplate()" data-kk="Эссе құрылымын қосу" data-ru="Добавить структуру эссе">Эссе құрылымын қосу</button><button class="small-btn" onclick="copyEssay()" data-kk="Мәтінді көшіру" data-ru="Скопировать текст">Мәтінді көшіру</button><button class="small-btn" onclick="finishEssay()" data-kk="Эссені аяқтау · +10 XP" data-ru="Завершить эссе · +10 XP">Эссені аяқтау · +10 XP</button>
+</div><div><label class="field-label" for="essayText" data-kk="Менің эссем" data-ru="Моё эссе">Менің эссем</label><textarea id="essayText" placeholder="Кіріспе: Менің ойымша, ..."></textarea><div class="stat-head" style="margin-top:8px"><span><span data-kk="Сөз саны:" data-ru="Количество слов:">Сөз саны:</span> <b id="wordCount">0</b></span><span data-kk="Автоматты сақталады" data-ru="Сохраняется автоматически">Автоматты сақталады</span></div></div></div>
 </section>
 
-<section id="speaking" class="panel hidden">
- <div class="section-title"><h2>🗣️ Айтылым алаңы</h2><span class="muted" id="speakingPosition"></span></div>
- <div class="progress"><div id="speakingBar"></div></div>
- <div class="card">
-  <span class="tag" id="speakingTag">Сөйлеу жағдаяты</span>
-  <h3 id="speakingTitle"></h3>
-  <p id="speakingInstructions" class="muted"></p>
-  <div id="speakingModel" class="notice"></div>
-  <label for="speakingText">Өз жауабыңды дайында</label>
-  <textarea id="speakingText" placeholder="Қазақша жауабыңды осында жаз..."></textarea>
-  <div class="actions">
-   <button class="btn" onclick="speakModel()">🔊 Үлгіні тыңдау</button>
-   <button class="btn primary" onclick="checkSpeaking()">Жауапты тексеру</button>
-   <button class="btn" onclick="nextSpeaking()">Келесі жағдаят →</button>
-  </div>
-  <div class="feedback" id="speakingFeedback"></div>
- </div>
+<section class="workspace panel hidden" id="speaking">
+<div class="panel-top"><div><h2 data-kk="🗣️ Сөйлесу тренажері" data-ru="🗣️ Тренажёр речи">🗣️ Сөйлесу тренажері</h2><p class="sub" data-kk="Қазақша фразаны тыңда, айт және жазып ал." data-ru="Слушай, произноси и записывай казахские фразы.">Қазақша фразаны тыңда, айт және жазып ал.</p></div><button class="ghost" onclick="closeSections()" data-kk="← Басты бет" data-ru="← Главная">← Басты бет</button></div>
+<div class="reader-col">
+<div class="eyebrow" data-kk="Жағдаят · Дүкенде" data-ru="Ситуация · В магазине">Жағдаят · Дүкенде</div>
+<h3>Сатушы: Сәлеметсіз бе! Сізге не керек?</h3>
+<p data-kk="Дұрыс жауапты таңда немесе дауыстап айтып көр." data-ru="Выбери ответ или произнеси его вслух.">Дұрыс жауапты таңда немесе дауыстап айтып көр.</p>
+<div class="filters"><button class="answer" onclick="speakAnswer(false,this)">Мен мектепке барамын.</button><button class="answer" onclick="speakAnswer(true,this)">Маған нан беріңізші.</button><button class="answer" onclick="speakAnswer(false,this)">Бүгін күн жылы.</button></div>
+<div class="mic-row"><button class="small-btn" onclick="speakText('Сәлеметсіз бе! Сізге не керек?')">🔊 Қазақша тыңдау</button><button class="small-btn" onclick="startSpeech()">🎙️ Сөйлеуді мәтінге айналдыру</button><button class="small-btn" id="recordBtn" onclick="startRecording()">⏺️ Дауысты жазу</button><button class="small-btn" onclick="stopRecording()">⏹ Жазуды тоқтату</button></div>
+<textarea id="speechTranscript" rows="3" placeholder="Танылған қазақша мәтін осы жерге шығады…" style="min-height:90px;margin-top:10px"></textarea>
+<audio id="recordedAudio" class="audio-player hidden" controls></audio>
+<div id="speechResult" class="notice">Микрофонды қолдану үшін сайтқа рұқсат бер. Сайт HTTPS арқылы ашылуы керек.</div>
+</div>
 </section>
 
-<div class="footer">TilQanat ✦ Қазақ тілін күн сайын үйрен!<br>Оқу прогресі осы браузерде сақталады.</div>
-</main>
+<div class="footer">TilQanat · Қазақ тілі мен әдебиеті · Оқу, тәжірибе, жетістік 🌿<br>Автор: Нурадинов Е.А.</div>
+</div>
+<div class="toast" id="toast"></div>
+
 <script>
-const LEVELS={
-a1:{name:"A1 · Бастапқы деңгей",title:"Алғашқы қадам",desc:"Қарапайым сөздер, танысу, отбасы, мектеп және күнделікті өмір.",rule:"Қарапайым сөйлем: Бастауыш + толықтауыш + баяндауыш. Мысалы: Мен кітап оқимын. Сұрақ: Сен қайда барасың?"},
-a2:{name:"A2–B1 · Орта деңгей",title:"Тілдік дағдыны дамыту",desc:"Сөз таптары, жалғаулар, мәтіннің негізгі ойы, пікір мен дәлел.",rule:"Септік жалғаулары сөздің сөйлемдегі қызметін білдіреді. Мысалы: мектепке (бағыт), мектептен (шығу), мектепте (орын). Күрделі сөйлемде ойлар жалғаулықтармен байланысады."},
-b1:{name:"B1–B2 · Жоғары деңгей",title:"Талдау және еркін пікір білдіру",desc:"Күрделі грамматика, стиль, автор позициясы, дәлелді эссе және пікірталас.",rule:"Дәлелді пікір құрылымы: тезис → дәлел → мысал → қорытынды. Күрделі сөйлемде бағыныңқы бөліктің мағынасы басыңқы бөлікпен байланысады. Ресми және көркем стильдің тілдік ерекшеліктерін ажырат."}
-};
-function parseWords(str){return str.trim().split("\n").map(x=>{let a=x.split("|");return {kk:a[0],ru:a[1],ex:a[2]||a[0]+" сөзін қолданып сөйлем құра."}})}
-const WORDS={
-a1:parseWords(`
-Сәлем|Привет|Сәлем, досым!
-Сау бол|До свидания|Сау бол, ертең кездесеміз.
-Рақмет|Спасибо|Көмегіңе рақмет.
-Өтінемін|Пожалуйста|Маған көмектесіңізші, өтінемін.
-Мен|Я|Мен оқушымын.
-Сен|Ты|Сен менің досымсың.
-Отбасы|Семья|Менің отбасым үлкен.
-Ана|Мама|Мен анама көмектесемін.
-Әке|Папа|Әкем жұмысқа барады.
-Аға|Старший брат|Менің ағам бар.
-Әпке|Старшая сестра|Әпкем кітап оқиды.
-Іні|Младший брат|Інім мектепте оқиды.
-Сіңлі|Младшая сестра|Сіңлім ән айтады.
-Мектеп|Школа|Мен мектепке барамын.
-Мұғалім|Учитель|Мұғалім сабақ түсіндіреді.
-Оқушы|Ученик|Оқушы тапсырма орындайды.
-Кітап|Книга|Мен кітап оқимын.
-Дәптер|Тетрадь|Дәптер үстелде жатыр.
-Қалам|Ручка|Мен қаламмен жазамын.
-Дос|Друг|Менің досым бар.
-Үй|Дом|Мен үйде тұрамын.
-Қала|Город|Біздің қала әдемі.
-Ауыл|Село|Атам ауылда тұрады.
-Су|Вода|Мен су ішемін.
-Нан|Хлеб|Дастарқанда нан бар.
-Алма|Яблоко|Мен қызыл алма жедім.
-Мысық|Кошка|Мысық сүт ішеді.
-Ит|Собака|Ит аулада жүр.
-Күн|Солнце;день|Бүгін күн жылы.
-Гүл|Цветок|Анам гүл суарады.
-`),
-a2:parseWords(`
-Табиғат|Природа|Табиғатты қорғау — ортақ міндет.
-Қоршаған орта|Окружающая среда|Қоршаған ортаны таза ұстайық.
-Жауапкершілік|Ответственность|Әр адам жауапкершілік танытуы керек.
-Мүмкіндік|Возможность|Білім жаңа мүмкіндік ашады.
-Қамқорлық|Забота|Жануарларға қамқорлық жасайық.
-Қарым-қатынас|Общение;отношения|Жақсы қарым-қатынас сыйластықтан басталады.
-Дәстүр|Традиция|Ұлттық дәстүрді құрметтеу маңызды.
-Мұра|Наследие|Тіл — халықтың рухани мұрасы.
-Зерттеу|Исследование|Оқушылар тақырыпты зерттеді.
-Себеп|Причина|Мәселенің себебін анықтадық.
-Салдар|Последствие|Ластанудың салдары қауіпті.
-Дәлел|Доказательство|Пікіріңді нақты дәлелмен негізде.
-Қорытынды|Вывод|Мәтін бойынша қорытынды жасадым.
-Салыстыру|Сравнение|Екі кейіпкерді салыстырдық.
-Ұқсастық|Сходство|Олардың мінезінде ұқсастық бар.
-Айырмашылық|Различие|Екі мәтіннің айырмашылығын тап.
-Қатысу|Участвовать|Мен байқауға қатысамын.
-Ұсыну|Предлагать|Оқушы өз шешімін ұсынды.
-Талдау|Анализ|Өлеңге талдау жасадық.
-Мақсат|Цель|Менің мақсатым — білім алу.
-Әдет|Привычка|Кітап оқу пайдалы әдет.
-Денсаулық|Здоровье|Денсаулықты күту қажет.
-Үнемдеу|Экономить|Суды үнемдеу керек.
-Қайта өңдеу|Переработка|Қағазды қайта өңдеуге болады.
-Қоғам|Общество|Қоғамда әр адамның орны бар.
-Ерікті|Волонтёр|Еріктілер адамдарға көмектеседі.
-Теңдік|Равенство|Білім алуда теңдік маңызды.
-Сенім|Доверие|Достық сенімге негізделеді.
-Құрмет|Уважение|Үлкенге құрмет көрсету керек.
-Таңдау|Выбор|Мамандық таңдау жауапты шешім.
-`),
-b1:parseWords(`
-Тұжырым|Утверждение|Автордың негізгі тұжырымын анықта.
-Дәйектеме|Аргументация|Пікіріңді дәйектемемен толықтыр.
-Көзқарас|Точка зрения|Автордың көзқарасын талда.
-Ұстаным|Позиция;принцип|Кейіпкердің өмірлік ұстанымы өзгереді.
-Қайшылық|Противоречие|Мәтінде ішкі қайшылық байқалады.
-Астарлы мағына|Подтекст|Өлеңдегі астарлы мағынаны түсіндір.
-Бейнелеуіш құрал|Средство выразительности|Теңеу — бейнелеуіш құрал.
-Метафора|Метафора|Метафора мәтіннің әсерін күшейтеді.
-Ирония|Ирония|Автор ирония арқылы сын айтады.
-Символ|Символ|Шығармадағы символдың қызметін түсіндір.
-Композиция|Композиция|Шығарманың композициясын талда.
-Шиеленіс|Развитие конфликта|Оқиға шиеленісі біртіндеп күшейеді.
-Кульминация|Кульминация|Кульминацияда тартыс шегіне жетеді.
-Кейіпкер эволюциясы|Эволюция персонажа|Кейіпкер эволюциясын мысалмен дәлелде.
-Авторлық баяндау|Авторское повествование|Авторлық баяндаудың ерекшелігін анықта.
-Стильдік реңк|Стилистическая окраска|Сөздің стильдік реңкін ажырат.
-Риторикалық сұрақ|Риторический вопрос|Риторикалық сұрақ ойды күшейтеді.
-Сараптау|Экспертный анализ|Деректерді сараптау қажет.
-Негіздеу|Обосновывать|Өз пікіріңді мысалмен негізде.
-Дереккөз|Источник|Сенімді дереккөзге сүйен.
-Сенімділік|Достоверность|Ақпараттың сенімділігін тексер.
-Мәселе қою|Постановка проблемы|Автор мәтін басында мәселе қояды.
-Балама шешім|Альтернативное решение|Балама шешім ұсын.
-Қоғамдық сана|Общественное сознание|Әдебиет қоғамдық санаға әсер етеді.
-Рухани құндылық|Духовная ценность|Шығарма рухани құндылықтарды дәріптейді.
-Тілдік норма|Языковая норма|Мәтіндегі тілдік норманы сақта.
-Пікірталас|Дискуссия|Пікірталаста дәлел келтіру маңызды.
-Зерттеу әдісі|Метод исследования|Зерттеу әдісін таңда.
-Тұтастық|Целостность|Шығарманың идеялық тұтастығын талда.
-Өзектілік|Актуальность|Мәселенің өзектілігін түсіндір.
-`)
-};
-const GRAMMAR={
-a1:[
-["«Мен оқушы...» сөйлемін толықтыр.",["мын","сың","сыз","мыз"],0,"«Мен» есімдігімен бірінші жақтың жекеше жалғауы қолданылады."],
-["«Сен дос...» сөйлемін толықтыр.",["пын","сың","сыз","мыз"],1,"«Сен» есімдігіне -сың/-сің жалғауы жалғанады."],
-["«Ол мұғалім...» сөйлемін толықтыр.",["мын","сің","сіз","—"],3,"«Ол» есімдігімен осы сөйлемде жіктік жалғауы қажет емес."],
-["Көпше түрді тап.",["кітап","кітаптар","кітабым","кітапқа"],1,"Көптік жалғаулары: -лар/-лер, -дар/-дер, -тар/-тер."],
-["«Мен ... ішемін.»",["су","судың","судан","суға"],0,"Ішетін зат тура толықтауыш болып келеді."],
-["Сұрақ сөзін таңда: ... тұрасың?",["Қашан","Қайда","Кімге","Неге"],1,"Орынды сұрау үшін «қайда?» қолданылады."],
-["«Үлкен» сөзінің антонимін тап.",["биік","ұзын","кіші","жақсы"],2,"Антонимдер — мағыналары қарама-қарсы сөздер."],
-["«Әдемі» сөзіне мағыналас сөзді тап.",["сұлу","жаман","алыс","суық"],0,"«Әдемі» мен «сұлу» мағыналас."],
-["«Мен мектепке ...»",["барамын","барасың","барады","бардың"],0,"«Мен» есімдігі бірінші жақта жіктеледі."],
-["Зат есімді тап.",["жүгірді","жасыл","кітап","тез"],2,"Зат есім заттың, ұғымның атауын білдіреді."],
-["Сын есімді тап.",["оқыды","әдемі","мектеп","бес"],1,"Сын есім заттың сынын білдіреді."],
-["Етістікті тап.",["қалам","жүгіреді","қызыл","үлкен"],1,"Етістік қимыл мен іс-әрекетті білдіреді."],
-["«Менің ... бар.»",["кітап","кітапты","кітаптан","кітапқа"],0,"«Менің кітабым бар» деген құрылым да дұрыс."],
-["Көптік жалғауын таңда: гүл...",["ге","дің","дер","мен"],2,"«Гүлдер» — көпше түр."],
-["«Кеше» қай уақытты білдіреді?",["өткен уақыт","осы уақыт","келер уақыт","орын"],0,"«Кеше» өткен уақытты білдіреді."],
-["«Ертең» қай уақытты білдіреді?",["өткен уақыт","келер уақыт","орын","адам"],1,"«Ертең» — келер уақытқа қатысты."],
-["Сәлемдесуді таңда.",["Сау бол","Сәлеметсіз бе?","Рақмет","Кешіріңіз"],1,"«Сәлеметсіз бе?» — сыпайы сәлемдесу."],
-["Өтінішті таңда.",["Маған көмектесіңізші.","Мен үйдемін.","Бұл кітап.","Күн жылы."],0,"-шы/-ші тұлғасы өтінішті жұмсартады."],
-["«Қызыл алма» тіркесінде «қызыл» қандай сөз?",["зат есім","сын есім","етістік","үстеу"],1,"Сын есім заттың түсін білдіреді."],
-["Сөйлемді дұрыс аяқта: Мен кітап ...",["оқимын","оқисың","оқиды","оқыдың"],0,"Бастауыш пен баяндауыш жақ жағынан сәйкеседі."]
+const data={
+"1-4":{
+level:"A1",
+words:[
+{k:"кітап",r:"книга",e:"📚",syn:"басылым",ex:"Мен кітап оқимын."},
+{k:"мектеп",r:"школа",e:"🏫",syn:"білім ордасы",ex:"Мен мектепке барамын."},
+{k:"дос",r:"друг",e:"🧑‍🤝‍🧑",syn:"жолдас",ex:"Менің досым бар."},
+{k:"отбасы",r:"семья",e:"👨‍👩‍👧",syn:"жанұя",ex:"Менің отбасым үлкен."},
+{k:"ана",r:"мама",e:"👩",syn:"шеше",ex:"Мен анамды жақсы көремін."},
+{k:"әке",r:"папа",e:"👨",syn:"ата",ex:"Әкем жұмыс істейді."},
+{k:"алма",r:"яблоко",e:"🍎",syn:"жеміс",ex:"Мен қызыл алма жедім."},
+{k:"су",r:"вода",e:"💧",syn:"ішетін су",ex:"Мен су ішемін."},
+{k:"күн",r:"солнце; день",e:"☀️",syn:"тәулік",ex:"Бүгін күн жылы."},
+{k:"гүл",r:"цветок",e:"🌷",syn:"өсімдік",ex:"Аулада әдемі гүл өсіп тұр."},
+{k:"үй",r:"дом",e:"🏠",syn:"баспана",ex:"Біздің үй кең."},
+{k:"құс",r:"птица",e:"🐦",syn:"қанатты жануар",ex:"Құс ағашта отыр."}
 ],
-a2:[
-["«Мектеп... барамын» — дұрыс жалғау.",["-тен","-ке","-те","-тің"],1,"Барыс септік бағытты білдіреді: мектепке."],
-["«Ауыл... тұрамын» — дұрыс жалғау.",["-дан","-ға","-да","-дың"],2,"Жатыс септік орын білдіреді: ауылда."],
-["«Қал... келдім» — дұрыс жалғау.",["-ға","-да","-дан","-дың"],2,"Шығыс септік шығу орнын білдіреді: қаладан."],
-["«Оқушының кітабы» тіркесінде қандай септік бар?",["атау","ілік","барыс","табыс"],1,"Ілік септік кімнің? ненің? сұрақтарына жауап береді."],
-["«Кітапты оқыдым» сөйлеміндегі септік.",["атау","жатыс","табыс","көмектес"],2,"Табыс септік тура нысанды білдіреді."],
-["«Досыммен келдім» сөзіндегі септік.",["көмектес","шығыс","ілік","барыс"],0,"Көмектес септік кіммен? немен? сұрақтарына жауап береді."],
-["«Мен оқы... жатырмын» — дұрыс нұсқа.",["п","й","ған","са"],1,"Осы шақтың аналитикалық тұлғасы: оқып жатырмын."],
-["«Егер уақытым болса, ...»",["келдім","келемін","келген","келіп"],1,"Шартты құрылымның жалғасы келер әрекетті білдіруі мүмкін."],
-["Себепті білдіретін жалғаулықты тап.",["бірақ","себебі","немесе","және"],1,"«Себебі» себепті түсіндіреді."],
-["Қарсылықты білдіретін жалғаулық.",["өйткені","сондықтан","бірақ","себебі"],2,"«Бірақ» қарама-қарсы ойларды байланыстырады."],
-["«Ол кітапты оқып шықты» — қай шақ?",["өткен шақ","келер шақ","бұйрық рай","шартты рай"],0,"«Оқып шықты» аяқталған өткен әрекетті білдіреді."],
-["Туынды сөзді тап.",["су","басшы","үй","тас"],1,"«Басшы» сөзі жұрнақ арқылы жасалған."],
-["«Жүгіргіш» сөзіндегі жұрнақ.",["-гіш","-лер","-ға","-мен"],0,"-гіш жұрнағы жаңа сөз жасайды."],
-["Синонимді тап: «батыл».",["қорқақ","ержүрек","әлсіз","жалқау"],1,"«Батыл» мен «ержүрек» мағыналас."],
-["Антонимді тап: «пайдалы».",["қажетті","тиімді","зиянды","маңызды"],2,"«Пайдалы» мен «зиянды» қарама-қарсы."],
-["Мәтіннің негізгі ойын анықтау үшін неге назар аударамыз?",["Тек ұзындығына","Қайталанатын негізгі ойға","Тек соңғы сөзге","Тек тыныс белгісіне"],1,"Негізгі ойды тақырып, тірек сөздер және қорытынды арқылы анықтаймыз."],
-["Пікірді дәлелдейтін сөйлемді таңда.",["Меніңше, кітап пайдалы.","Мысалы, кітап оқу сөздік қорды байытады.","Кітап үстелде.","Кеше күн жылы болды."],1,"Дәлел пікірді нақты мысалмен негіздейді."],
-["«Оқушылар тапсырманы орындады» — бастауыш.",["тапсырманы","орындады","оқушылар","жоқ"],2,"Бастауыш кім? не? сұрағына жауап береді."],
-["«Балалар аулада ойнады» — баяндауыш.",["балалар","аулада","ойнады","жоқ"],2,"Баяндауыш бастауыштың ісін білдіреді."],
-["Төл сөздің тыныс белгісі дұрыс берілген нұсқа.",["Ана айтты балалар келді","Ана: «Балалар келді», — деді.","Ана балалар келді деді","Ана «балалар келді» деді"],1,"Төл сөз тырнақша және тиісті тыныс белгілерімен беріледі."]
+questions:[
+{q:"«Кітап» сөзінің аудармасын таңда.",a:["ручка","книга","окно"],c:1},
+{q:"«Мектеп» дегеніміз не?",a:["школа","магазин","улица"],c:0},
+{q:"Сөйлемді аяқта: Мен су ...",a:["ішемін","жазамын","ұшамын"],c:0},
+{q:"«Ана» сөзінің орысша аудармасы қандай?",a:["папа","бабушка","мама"],c:2},
+{q:"Жемісті таңда.",a:["алма","кітап","мектеп"],c:0},
+{q:"Көптік жалғауы бар сөзді таңда.",a:["үй","үйлер","үйге"],c:1},
+{q:"«Дос» сөзі нені білдіреді?",a:["друг","враг","врач"],c:0},
+{q:"Бос орынды толтыр: Мен мектепке ...",a:["барамын","ішемін","жүземін"],c:0},
+{q:"«Гүл» сөзінің аудармасы қандай?",a:["лист","цветок","дерево"],c:1},
+{q:"Дұрыс сөйлемді таңда.",a:["Мен кітап оқимын.","Кітап мен оқиды.","Оқимын кітап мен."],c:0}
 ],
-b1:[
-["Автор көзқарасын анықтаудың ең сенімді жолы.",["Тек мәтін атауын оқу","Автор пікірі мен дәлелдерін талдау","Кездейсоқ сөйлем таңдау","Тек кейіпкер атын санау"],1,"Автор позициясын мәтіндегі бағалау, дәлел және қорытынды арқылы анықтаймыз."],
-["Аргументтің міндеті қандай?",["Мәтінді ұзарту","Тезисті негіздеу","Тақырыпты өзгерту","Кейіпкер атын атау"],1,"Аргумент тезистің негізді екенін дәлелдейді."],
-["Метафораны тап.",["Ақ қар","Уақыт — өзен","Үш кітап","Жылы бөлме"],1,"Метафора бір ұғымды екінші ұғым арқылы бейнелі көрсетеді."],
-["Теңеуді тап.",["Күн күлді","Жүрек тас болды","Батыр арыстандай айбатты","Жел соқты"],2,"-дай/-дей тұлғалары теңеу жасай алады."],
-["Риторикалық сұрақтың қызметі.",["Тек жауап алу","Ойды әсерлі күшейту","Оқиға уақытын көрсету","Сөз санын көбейту"],1,"Риторикалық сұрақ жауап күтпей, ойға әсер ету үшін беріледі."],
-["Композиция нені білдіреді?",["Сөздің аудармасын","Шығарма бөліктерінің құрылымын","Тек автор өмірін","Тыныс белгілерін"],1,"Композиция — шығарма бөліктерінің өзара ұйымдасуы."],
-["Кульминация дегеніміз...",["Оқиғаның басталуы","Тартыстың шарықтау шегі","Шығарманың атауы","Автордың өмірбаяны"],1,"Кульминацияда тартыс ең жоғары деңгейге жетеді."],
-["Мәтіндегі астарлы мағына қалай анықталады?",["Тек сөз санымен","Контекст пен бейнелі қолданысты талдау арқылы","Тек бірінші сөйлеммен","Тек тыныс белгісімен"],1,"Астарлы мағына тура айтылмаған ойды контекст арқылы аңғартады."],
-["Ресми стильге тән белгі.",["Эмоциялық бейнелеу басым","Нақты, қалыптасқан тілдік құрылым","Кейіпкер диалогы міндетті","Ұйқас міндетті"],1,"Ресми стиль дәлдік пен қалыптасқан құрылымдарды талап етеді."],
-["Публицистикалық стильдің мақсаты.",["Тек көңіл көтеру","Қоғамдық пікірге әсер ету және ақпарат тарату","Тек қиял әлемін құру","Ережені жаттату"],1,"Публицистикалық мәтін ақпарат беріп, оқырманға әсер етеді."],
-["«Дегенмен» жалғаулығы қандай қатынас білдіреді?",["Қарсылық","Мезгіл","Себеп","Мақсат"],0,"«Дегенмен» алдыңғы ойға қарсы немесе шектеу мәнін қосады."],
-["Сенімді дереккөзді бағалауда не маңызды?",["Автордың аты ғана","Деректің нақтылығы, уақыты және беделі","Мәтіннің түсі","Тақырыптың ұзындығы"],1,"Ақпаратты бірнеше сенімді дереккөзбен салыстырған дұрыс."],
-["Дәйексөзді қолданғанда не істеу қажет?",["Авторын көрсетпеу","Дәйексөзді дәл беріп, дереккөзін көрсету","Сөздерін өзгертіп, тырнақша қою","Мәтінді түгел көшіру"],1,"Дәйексөздің дәлдігі мен дереккөзін көрсету академиялық адалдықты сақтайды."],
-["Тезис дегеніміз...",["Негізгі дәлелденетін пікір","Кездейсоқ мысал","Мәтіннің соңғы сөзі","Тек тақырып"],0,"Тезис — эсседе негізделетін басты тұжырым."],
-["Күшті қорытындының белгісі.",["Жаңа тақырыпқа көшу","Негізгі ойды жинақтап, тезиске оралу","Дәлелдерді алып тастау","Тақырыпты қайталау ғана"],1,"Қорытынды негізгі ойды жинақтайды және тұжырымды аяқтайды."],
-["Иронияның негізгі сипаты.",["Мағынаны әдейі астарлап, кейде кері мәнде беру","Тек дерек келтіру","Сөзді септеу","Ұйқас құру"],0,"Иронияда айтылған сөз бен меңзелген мағына арасында алшақтық болуы мүмкін."],
-["Кейіпкер эволюциясын талдау үшін...",["Тек сыртқы келбетін сипаттау","Бастапқы және соңғы мінезін салыстыру","Тек есімін жазу","Оқиға орнын санау"],1,"Кейіпкердің өзгерісін әрекет, шешім және көзқарас арқылы дәлелдейміз."],
-["Себеп-салдар байланысын тап.",["Күн ашық, әрі жылы","Жаңбыр жауғандықтан, жол тайғақ болды","Кітап пен дәптер","Бірінші және екінші"],1,"«Жауғандықтан» себепті, «тайғақ болды» салдарды көрсетеді."],
-["Автор позициясын дәлелдеудің дұрыс жолы.",["Жеке болжамды дерек деп ұсыну","Мәтіннен нақты дәйек келтіру","Тақырыпты ғана қайталау","Басқа шығарманы талдау"],1,"Мәтіндік дәйек түсіндіруді негіздейді."],
-["Эсседегі қарсы пікірмен жұмыс істеу тәсілі.",["Оны елемеу","Қарсы уәжді әділ көрсетіп, дәлелмен жауап беру","Қарсы пікірді мазақ ету","Тақырыпты өзгерту"],1,"Күшті аргумент қарсы уәжді ескеріп, негізді жауап ұсынады."]
-]};
-const READINGS={
-a1:[
-["Менің отбасым","Менің отбасым шағын. Менің анам, әкем және інім бар. Біз бірге тамақ ішеміз. Демалыс күні саябаққа барамыз. Мен отбасымды жақсы көремін.","Мәтіндегі негізгі ой қандай?",["Отбасы туралы","Спорт туралы","Мектеп туралы","Қыс туралы"],0],
-["Менің мектебім","Менің мектебім үлкен және жарық. Сыныпта парталар, тақта және кітап сөресі бар. Мұғалім бізге қазақ тілін үйретеді. Мен сабаққа күн сайын келемін.","Оқушы қай пәнді үйренеді?",["Математика","Қазақ тілі","Музыка","Сурет"],1],
-["Менің досым","Менің досымның аты — Аян. Ол мейірімді және көңілді. Біз бірге футбол ойнаймыз. Сабақтан кейін кітапханаға барамыз. Аян маған жиі көмектеседі.","Аян қандай бала?",["Мейірімді","Ашулы","Жалқау","Ұялшақ емес деп айтылған"],0],
-["Күн тәртібі","Мен таңертең сағат жетіде тұрамын. Бетімді жуып, таңғы ас ішемін. Содан кейін мектепке барамын. Кешке үй тапсырмасын орындаймын. Сағат ондарда ұйықтаймын.","Оқушы таңертең не істейді?",["Ұйықтайды","Таңғы ас ішеді","Дүкенге барады","Теледидар көреді"],1],
-["Жыл мезгілдері","Қазақстанда төрт жыл мезгілі бар: қыс, көктем, жаз және күз. Қыста қар жауады. Көктемде гүлдер өседі. Жазда күн ыстық болады. Күзде жапырақтар сарғаяды.","Қай мезгілде қар жауады?",["Жазда","Күзде","Қыста","Көктемде"],2],
-["Үй жануарлары","Ауылда әжемнің сиыры, қойы және жылқысы бар. Әжем жануарларға жем береді. Мен оған көмектесемін. Жануарларға күн сайын күтім керек.","Әжесі жануарларға не береді?",["Кітап","Жем","Ойыншық","Суық су ғана"],1],
-["Дүкенде","Мен анаммен дүкенге бардым. Біз нан, сүт және алма сатып алдық. Сатушы бізге рақмет айтты. Үйге келген соң, азық-түлікті орнына қойдық.","Олар не сатып алды?",["Киім","Нан, сүт, алма","Ойыншық","Дәптер"],1],
-["Менің қалам","Мен қалада тұрамын. Біздің қалада саябақ, кітапхана және мектеп бар. Көшелер таза. Демалыс күні біз саябақта серуендейміз.","Қалада қандай орын бар?",["Мұздық","Кітапхана","Теңіз","Шөл ғана"],1],
-["Пайдалы таңғы ас","Таңғы ас адамға күш береді. Мен жұмыртқа, нан және жеміс жеймін. Таңертең су ішемін. Дұрыс тамақтану денсаулыққа пайдалы.","Таңғы ас не береді?",["Күш","Үй тапсырмасы","Ойыншық","Жаңбыр"],0],
-["Табиғатты сүйемін","Табиғатта ағаштар, гүлдер және құстар бар. Біз қоқысты жерге тастамауымыз керек. Саябақты таза ұстайық. Әр бала бір ағаш отырғызса, табиғатқа көмектеседі.","Табиғатты қорғау үшін не істеу керек?",["Қоқыс тастау","Гүлді жұлу","Ағаш отырғызу","Суды ластау"],2]
+grammar:{q:"Сөздерді дұрыс ретпен орналастыр.",words:["Мен","кітап","оқимын"],correct:"Мен кітап оқимын"},
+reader:{k:"Айдана мектепке барады. Оның сөмкесінде кітап, дәптер және қалам бар. Сабақтан кейін ол досымен ойнайды.",r:"Айдана идёт в школу. В её сумке есть книга, тетрадь и ручка. После уроков она играет с другом.",q:"Айдананың сөмкесінде не бар?",a:["Тек ойыншық","Кітап, дәптер және қалам","Тек киім"],c:1}
+},
+"5-8":{
+level:"A2–B1",
+words:[
+{k:"табиғат",r:"природа",e:"🌳",syn:"қоршаған орта",ex:"Табиғатты қорғау — әр адамның міндеті."},
+{k:"еңбек",r:"труд",e:"🛠️",syn:"жұмыс",ex:"Еңбек адамды шыңдайды."},
+{k:"арман",r:"мечта",e:"✨",syn:"мақсат",ex:"Менің арманым — жақсы маман болу."},
+{k:"денсаулық",r:"здоровье",e:"❤️",syn:"саулық",ex:"Денсаулық — зор байлық."},
+{k:"достық",r:"дружба",e:"🤝",syn:"татулық",ex:"Достық сенімнен басталады."},
+{k:"қамқорлық",r:"забота",e:"💚",syn:"жанашырлық",ex:"Қамқорлық жасау — жақсы қасиет."},
+{k:"жауап",r:"ответ",e:"💬",syn:"қайтарылған сөз",ex:"Ол сұраққа дұрыс жауап берді."},
+{k:"саяхат",r:"путешествие",e:"🧭",syn:"жол жүру",ex:"Жазда біз саяхатқа шығамыз."},
+{k:"қоршаған орта",r:"окружающая среда",e:"🌍",syn:"табиғи орта",ex:"Қоршаған ортаны таза ұстайық."},
+{k:"дәстүр",r:"традиция",e:"🪕",syn:"ғұрып",ex:"Қазақ халқының дәстүрлері бай."},
+{k:"пайдалы",r:"полезный",e:"✅",syn:"тиімді",ex:"Кітап оқу — пайдалы әдет."},
+{k:"салыстыру",r:"сравнивать",e:"⚖️",syn:"ұқсату",ex:"Екі мәтінді салыстырып оқы."},
+{k:"пікір",r:"мнение",e:"🗨️",syn:"көзқарас",ex:"Мен өз пікірімді айттым."},
+{k:"себеп",r:"причина",e:"🔎",syn:"негіз",ex:"Оның келмеуіне бір себеп болды."},
+{k:"шешім",r:"решение",e:"💡",syn:"тоқтам",ex:"Біз ортақ шешім қабылдадық."}
 ],
-a2:[
-["Суды үнемдеу","Су — тіршіліктің негізгі көзі. Адамдар суды күн сайын пайдаланады, алайда таза су қоры шектеулі. Тісті тазалағанда кранды жауып қоюға болады. Ағып тұрған құбырды уақытында жөндеу де суды үнемдейді. Әр адамның шағын әрекеті үлкен нәтижеге жеткізеді.","Мәтіннің негізгі ойы қандай?",["Суды үнемдеу қажеттігі","Қаланың тарихы","Спорттың пайдасы","Кітап таңдау"],0],
-["Кітап оқудың пайдасы","Кітап оқу сөздік қорды кеңейтеді және ойлау қабілетін дамытады. Көркем шығарма оқырманды түрлі кейіпкерлермен таныстырады. Кейіпкерлердің шешімдерін талдау арқылы адам өз пікірін қалыптастырады. Күніне он бес минут оқу да пайдалы әдетке айналуы мүмкін.","Кітап оқу қандай дағдыны дамытады?",["Тек жылдам жүруді","Ойлау қабілетін","Тек сурет салуды","Ұйықтауды"],1],
-["Ұлттық дәстүр","Ұлттық дәстүр халықтың тарихы мен дүниетанымын көрсетеді. Үлкенге құрмет, кішіге ізет таныту — қазақ қоғамында маңызды құндылық. Дәстүрді сақтау оны өзгеріссіз қайталау ғана емес, оның мағынасын түсініп, кейінгі ұрпаққа жеткізу болып саналады.","Дәстүрді сақтау нені білдіреді?",["Мағынасын түсініп, ұрпаққа жеткізу","Тарихты ұмыту","Басқа мәдениетті жоққа шығару","Тек мерекеде киіну"],0],
-["Әлеуметтік желі","Әлеуметтік желі ақпарат алмасуды жеңілдетеді. Бірақ интернеттегі кез келген мәлімет шынайы бола бермейді. Ақпаратты бөліспес бұрын оның авторын, жарияланған уақытын және басқа дереккөздердегі мәліметтерді тексерген жөн. Саналы қолданушы ақпаратты жауапкершілікпен таратады.","Ақпаратты бөлісер алдында не істеу керек?",["Бірден тарату","Дереккөзін тексеру","Тақырыбын ғана оқу","Пікірлерді өшіру"],1],
-["Еріктілік","Еріктілер қоғамдық жұмыстарға өз еркімен қатысады. Олар қарттарға көмектесуі, аула тазалауы немесе қайырымдылық шараларын ұйымдастыруы мүмкін. Еріктілік жауапкершілік пен ынтымақтастықты дамытады. Мұндай тәжірибе адамның қоғам алдындағы міндетін тереңірек түсінуіне ықпал етеді.","Еріктілік нені дамытады?",["Жауапкершілік пен ынтымақтастықты","Бәсекені ғана","Ешбір дағдыны","Жалқаулықты"],0],
-["Қала экологиясы","Қаладағы көлік санының көбеюі ауа сапасына әсер етуі мүмкін. Қоғамдық көлікпен жүру, велосипед пайдалану және ағаш отырғызу экологиялық жүктемені азайтуға көмектеседі. Дегенмен, мәселені шешу үшін тұрғындардың ғана емес, ұйымдар мен билік орындарының да жүйелі әрекеті қажет.","Мәтінде қандай шешім ұсынылады?",["Көлікті көбейту","Қоғамдық көлік пайдалану","Ағаштарды кесу","Қоқысты өртеу"],1],
-["Мамандық таңдау","Мамандық таңдау кезінде адамның қызығушылығы, қабілеті және еңбек нарығындағы сұраныс ескеріледі. Тек беделге немесе жалақыға қарап шешім қабылдау жеткіліксіз. Мамандық туралы ақпарат жинап, сол салада жұмыс істейтін адамдармен сөйлесу дұрыс шешім қабылдауға көмектеседі.","Мамандық таңдауда не маңызды?",["Тек достың пікірі","Қызығушылық пен қабілетті ескеру","Тек атауына қарау","Ақпарат жинамау"],1],
-["Денсаулық және қозғалыс","Тұрақты дене белсенділігі адамның көңіл күйіне және жалпы денсаулығына пайдалы. Күнделікті серуендеу, спортпен шұғылдану және жеткілікті ұйықтау өзара байланысты әдеттер. Әр адам өз мүмкіндігіне сай қозғалыс түрін таңдап, оны тұрақты орындауға тырысқаны жөн.","Қандай әрекет пайдалы әдетке жатады?",["Ұйқыны азайту","Күнделікті серуендеу","Қозғалыстан бас тарту","Тамақты өткізіп жіберу"],1],
-["Тіл және мәдениет","Тіл арқылы халықтың дүниетанымы, тарихы және мәдениеті көрініс табады. Мақал-мәтелдерде өмірлік тәжірибе жинақталған. Тілді үйрену тек сөз жаттаумен шектелмейді: сөздің қолданысын, мәдени реңкін және сөйлеу жағдаятын да түсіну қажет.","Тілді үйрену нені қамтиды?",["Тек сөз жаттау","Сөз қолданысы мен мәдени реңкті түсіну","Тек аударма жасау","Тек емле ережесін оқу"],1],
-["Топтық жұмыс","Топтық жұмыста әр қатысушы өз ойын айтуға және басқаларды тыңдауға мүмкіндік алады. Міндеттерді бөлісу уақытты тиімді пайдалануға көмектеседі. Келіспеушілік туындаса, мәселені жеке адамды сынамай, дәлел мен ұсыныс арқылы талқылаған дұрыс.","Келіспеушілікті қалай талқылаған жөн?",["Жеке адамды сынау","Дәлел мен ұсыныс арқылы","Әңгімеден қашу","Басқаны тыңдамау"],1]
+questions:[
+{q:"«Қоршаған орта» тіркесінің мағынасы қандай?",a:["окружающая среда","далёкая страна","домашнее задание"],c:0},
+{q:"«Достық» сөзінің түбірін тап.",a:["дос","тық","достықты"],c:0},
+{q:"Дұрыс сөйлемді таңда.",a:["Мен кітапты оқыдым.","Мен оқыдымды кітап.","Кітап мен оқыдымды."],c:0},
+{q:"«Денсаулық — зор байлық» мақалының негізгі ойы қандай?",a:["Ақша бәрінен маңызды","Денсаулықтың құндылығы","Саяхаттың пайдасы"],c:1},
+{q:"Себеп-салдар мәнді жалғаулықты таңда.",a:["бірақ","өйткені","немесе"],c:1},
+{q:"«Пайдалы» сөзінің қарама-қарсы мағынасына жақын сөзді таңда.",a:["зиянды","әдемі","биік"],c:0},
+{q:"Көптік жалғауы бар сөзді тап.",a:["дәстүрлер","дәстүрге","дәстүрім"],c:0},
+{q:"«Менің ойымша» тіркесі не үшін қолданылады?",a:["Пікір білдіру","Бұйрық беру","Сан айту"],c:0},
+{q:"«Ол кітапты оқып бітірді» сөйлеміндегі шақты анықта.",a:["Өткен шақ","Осы шақ","Келер шақ"],c:0},
+{q:"Табиғатты қорғаудың дұрыс жолын таңда.",a:["Қоқысты жерге тастау","Суды босқа ағызу","Қоқысты сұрыптау"],c:2}
 ],
-b1:[
-["Әдеби шығарма және қоғам","Әдеби шығарма жеке адамның тағдырын суреттей отырып, тұтас қоғамға тән мәселелерді де көтере алады. Кейіпкердің таңдауы оның мінезін ғана емес, өмір сүрген ортасының құндылықтарын да танытады. Сондықтан шығарманы талдағанда оқиға желісімен шектелмей, әлеуметтік жағдай мен авторлық ұстанымның байланысын қарастыру маңызды.","Шығарманы терең талдау үшін не қажет?",["Тек оқиға желісін айту","Кейіпкер, орта және авторлық ұстанымды байланыстыру","Тек кейіпкер атын жаттау","Мәтінді қысқарту ғана"],1],
-["Ақпараттық сауаттылық","Ақпараттың қолжетімді болуы оның автоматты түрде сенімді екенін білдірмейді. Дереккөздің беделі, жарияланған күні, автордың құзыреті және келтірілген дәлелдер өзара бағалануы тиіс. Бірнеше тәуелсіз дереккөзді салыстыру жаңсақ тұжырым жасау ықтималдығын азайтады. Бұл дағды цифрлық ортада саналы шешім қабылдауға мүмкіндік береді.","Ақпараттың сенімділігін арттыратын әрекет қандай?",["Тақырыпқа сену","Бірнеше тәуелсіз дереккөзді салыстыру","Ескі ақпаратты тексермеу","Авторы белгісіз мәліметті тарату"],1],
-["Тіл және тұлғалық болмыс","Ана тілі тұлғаның мәдени жадын сақтауға және ұрпақтар арасындағы байланысты нығайтуға ықпал етеді. Сонымен бірге тіл өзгермейтін құбылыс емес: қоғамдағы жаңа тәжірибе сөздік құрамға әсер етеді. Тілдің дамуы оның дәстүрлі негізін сақтау мен жаңа қолданыстарды орынды қабылдаудың тепе-теңдігіне байланысты.","Мәтінде тіл дамуы қалай түсіндіріледі?",["Тек ескі сөздерді сақтау","Дәстүр мен жаңа қолданыстың тепе-теңдігі","Тілдің өзгеруіне толық тыйым салу","Басқа тілдерді қолданбау"],1],
-["Экологиялық жауапкершілік","Экологиялық мәселені тек жеке адамның әдеттерімен түсіндіру жеткіліксіз. Қалдықтарды азайту және энергияны үнемдеу маңызды болғанымен, өндірістік шешімдер, инфрақұрылым және қоғамдық саясат та нәтижеге әсер етеді. Тұрақты өзгеріс жеке жауапкершілік пен жүйелік шаралардың қатар жүруін талап етеді.","Автордың ұстанымы қандай?",["Мәселені тек жеке адам шешеді","Жеке және жүйелік әрекеттер қатар қажет","Экологияға мән берудің қажеті жоқ","Тек технология бәрін шешеді"],1],
-["Көркем мәтіндегі символ","Көркем шығармадағы символ нақты затты бейнелеумен қатар, кеңірек идеяны меңзеуі мүмкін. Мысалы, жол бейнесі кейде адамның өмірлік сапарын, таңдауларын немесе ізденісін білдіреді. Алайда символдың мағынасы барлық мәтінде бірдей болмайды; оны шығарманың контексі мен басқа бейнелерге сүйеніп түсіндіру қажет.","Символдың мағынасын қалай анықтаймыз?",["Барлық мәтінде бірдей деп қабылдау","Контекст пен өзге бейнелерді талдау","Тек сөздікке қарау","Оқиғаны елемеу"],1],
-["Қоғамдық пікір","Қоғамдық пікір әртүрлі тәжірибе мен құндылықтың ықпалымен қалыптасады. Бір мәселе жөнінде көзқарастардың әркелкі болуы оның күрделілігін көрсетуі мүмкін. Пікірталаста қарсы тарапты дәл тыңдау, ұғымдарды нақтылау және дәлелді бағалау ортақ шешім іздеуге мүмкіндік береді.","Өнімді пікірталастың шарты қандай?",["Қарсы тарапты бөлу","Дәлелді тыңдап, ұғымдарды нақтылау","Дауысты көтеру","Қарсы пікірді елемеу"],1],
-["Дәлелді эссе","Дәлелді эсседе автор алдымен нақты тезис ұсынады, содан кейін оны сенімді аргументтермен негіздейді. Мысал дәлелдің мәнін ашады, ал қорытынды негізгі ойларды жинақтайды. Қарсы уәжді ескеріп, оған қисынды жауап беру эссенің сенімділігін күшейтеді.","Дәлелді эссенің маңызды элементі қайсы?",["Тезис пен аргумент","Тек ұзақ кіріспе","Дәлелсіз қорытынды","Бір ойды қайталау"],0],
-["Медиа тілінің ықпалы","Медиа тақырыптары оқырманның назарын аудару үшін ықшам әрі әсерлі беріледі. Кейде эмоциялық сөздер мәселені күрделірек немесе қарапайымырақ етіп көрсетуі мүмкін. Сондықтан ақпаратты талдағанда тақырыпты ғана емес, толық мәтінді, қолданылған сөздерді және келтірілген деректерді де қарастыру керек.","Медиа материалын бағалағанда неге назар аудару керек?",["Тек тақырыпқа","Толық мәтін, тіл және деректерге","Тек суретке","Жарияланған лайк санына ғана"],1],
-["Кейіпкердің ішкі тартысы","Кейіпкердің ішкі тартысы оның қалауы мен міндеті, сенімі мен әрекеті арасында туындауы мүмкін. Мұндай қайшылық кейіпкердің шешімдерінен, ішкі монологынан және басқа тұлғалармен қарым-қатынасынан байқалады. Оны талдау үшін мәтіннен нақты эпизодтар алып, өзгерістің себебін түсіндіру қажет.","Ішкі тартысты қалай дәлелдеуге болады?",["Тек кейіпкердің жасын атау","Әрекет пен ішкі ойға қатысты эпизодтарды талдау","Тек табиғатты сипаттау","Шығарманың атауын қайталау"],1],
-["Технология және білім","Цифрлық құралдар ақпаратты іздеуді және бірлескен жұмысты жеңілдетеді. Бірақ құралдың болуы білімнің сапасына өздігінен кепілдік бермейді. Оқу мақсатына сай ресурс таңдау, ақпаратты тексеру және нәтижені сыни бағалау маңызды. Технология тиімді әдістемемен ұштасқанда ғана оқу үдерісіне нақты пайда әкеледі.","Технологияның пайдасы қай кезде артады?",["Құралды мақсатсыз қолданғанда","Оқу мақсаты мен сыни бағалау қатар болғанда","Тек көп ресурс қолданғанда","Ақпаратты тексермегенде"],1]
-]
+grammar:{q:"Сөздерді дұрыс ретпен орналастыр.",words:["Менің","досым","маған","көмектесті"],correct:"Менің досым маған көмектесті"},
+reader:{k:"Табиғат — адам өмірінің негізі. Орман ауаны тазартады, ал өзен мен көл тіршілікке нәр береді. Сондықтан табиғи байлықтарды қорғау және суды үнемдеу маңызды.",r:"Природа — основа жизни человека. Лес очищает воздух, а реки и озёра поддерживают жизнь. Поэтому важно беречь природные богатства и экономить воду.",q:"Мәтін бойынша орманның қандай пайдасы бар?",a:["Ауаны тазартады","Суды бояйды","Жол салады"],c:0}
+},
+"9-11":{
+level:"B1–B2",
+words:[
+{k:"жауапкершілік",r:"ответственность",e:"🎯",syn:"міндетті сезіну",ex:"Жауапкершілік әр адамға қажет."},
+{k:"көзқарас",r:"точка зрения",e:"👁️",syn:"пікір",ex:"Әр адамның өзіндік көзқарасы бар."},
+{k:"құндылық",r:"ценность",e:"💎",syn:"асыл қасиет",ex:"Тіл — ұлттық құндылық."},
+{k:"қоғам",r:"общество",e:"🏙️",syn:"жұртшылық",ex:"Қоғам білімді жастарға сенім артады."},
+{k:"дәйек",r:"аргумент; доказательство",e:"📌",syn:"негіз",ex:"Пікіріңді нақты дәйекпен дәлелде."},
+{k:"тұжырым",r:"вывод",e:"🧠",syn:"қорытынды",ex:"Мәтін бойынша тұжырым жасадым."},
+{k:"ықпал",r:"влияние",e:"🌊",syn:"әсер",ex:"Кітап адамның ойлауына ықпал етеді."},
+{k:"мұра",r:"наследие",e:"🏛️",syn:"қазына",ex:"Әдеби мұра ұрпаққа аманат."},
+{k:"зерттеу",r:"исследование",e:"🔬",syn:"зерделеу",ex:"Оқушы деректерді зерттеді."},
+{k:"ұстаным",r:"позиция; принцип",e:"🧭",syn:"қағида",ex:"Автордың ұстанымын анықта."},
+{k:"дәйектеме",r:"обоснование",e:"📑",syn:"дәлелдеу",ex:"Эсседе дәйектеме келтіру қажет."},
+{k:"қайшылық",r:"противоречие",e:"⚡",syn:"қарама-қайшылық",ex:"Мәтінде екі түрлі көзқарас қайшылық тудырады."},
+{k:"өзектілік",r:"актуальность",e:"📍",syn:"маңыздылық",ex:"Бұл мәселенің өзектілігі жоғары."},
+{k:"парасат",r:"разум; мудрость",e:"🦉",syn:"даналық",ex:"Парасатты адам әділ шешім қабылдайды."},
+{k:"өркениет",r:"цивилизация",e:"🌐",syn:"мәдени даму",ex:"Өркениет білім мен ғылымға сүйенеді."}
+],
+questions:[
+{q:"«Құндылық» сөзінің мағынасына сәйкес нұсқаны таңда.",a:["ценность","препятствие","случайность"],c:0},
+{q:"«Автордың ұстанымы» дегеніміз не?",a:["Автордың көзқарасы","Мәтіннің көлемі","Оқиға орны"],c:0},
+{q:"Пікірді дәлелдеуге не қажет?",a:["Нақты дәйек","Кездейсоқ сөз","Тақырыпты қайталау ғана"],c:0},
+{q:"«Алайда» жалғаулығы қандай мағына береді?",a:["Қарсылық","Себеп","Мақсат"],c:0},
+{q:"Эссенің қорытынды бөлімінде не беріледі?",a:["Негізгі тұжырым","Жаңа тақырыптың атауы ғана","Кейіпкерлер тізімі"],c:0},
+{q:"«Өзектілік» сөзіне мағыналас сөзді таңда.",a:["маңыздылық","алыстық","үнсіздік"],c:0},
+{q:"Себеп-салдар қатынасын білдіретін тіркесті таңда.",a:["соған байланысты","соған қарамастан","бір жағынан"],c:0},
+{q:"«Зерттеу нәтижесінде...» тіркесі көбіне қай бөлімде қолданылады?",a:["Қорытындыда немесе талдауда","Тек амандасуда","Тек диалогта"],c:0},
+{q:"Мәтіннің негізгі идеясын анықтағанда нені ескеру керек?",a:["Тақырып пен автор ұстанымын","Тек сөйлем санын","Тек тыныс белгілерін"],c:0},
+{q:"Дәйектемесі бар пікір қандай болады?",a:["Негізделген","Кездейсоқ","Дәлелсіз"],c:0}
+],
+grammar:{q:"Сөздерді дұрыс ретпен орналастыр.",words:["Менің","ойымша,","білім","қоғамды","дамытады"],correct:"Менің ойымша, білім қоғамды дамытады"},
+reader:{k:"Қазіргі қоғамда ақпаратты дұрыс бағалау қабілеті ерекше маңызға ие. Ақпараттың көп болуы оның бәрі сенімді дегенді білдірмейді. Сондықтан оқырман дереккөзді салыстырып, дәлелді тексеріп, автордың мақсатын анықтауы қажет. Сыни ойлау саналы шешім қабылдауға көмектеседі.",r:"В современном обществе особое значение имеет умение правильно оценивать информацию. Большое количество информации не означает, что вся она достоверна. Поэтому читателю необходимо сравнивать источники, проверять доказательства и определять цель автора. Критическое мышление помогает принимать осознанные решения.",q:"Сыни ойлау неге көмектеседі?",a:["Саналы шешім қабылдауға","Барлық дерекке бірдей сенуге","Ақпаратты тексермеуге"],c:0}
+}
 };
-const WRITING={
-a1:["Өзім туралы","Менің отбасым","Менің мектебім","Менің досым","Менің сүйікті тағамым","Менің күн тәртібім","Менің қалам немесе ауылым","Жылдың сүйікті мезгілі","Менің үй жануарым","Табиғатты қалай қорғаймын?"],
-a2:["Кітап оқудың пайдасы","Достықтың маңызы","Суды үнемдеу жолдары","Ұлттық дәстүрді сақтау","Әлеуметтік желінің пайдасы мен зияны","Менің болашақ мамандығым","Денсаулық және спорт","Қаладағы экологиялық мәселе","Жақсы оқушы қандай болуы керек?","Тіл үйренудің тиімді жолдары"],
-b1:["Қазіргі қоғамдағы ана тілінің рөлі","Әдебиет адамды өзгерте ала ма?","Цифрлық дәуірдегі ақпараттық сауаттылық","Экологиялық жауапкершілік кімнен басталады?","Әлеуметтік желі қоғамдық пікірге қалай әсер етеді?","Мамандық таңдауда жеке қызығушылық маңызды ма?","Көркем шығармадағы кейіпкер таңдауы","Технология білім сапасын арттыра ма?","Дәстүр мен жаңашылдықтың үйлесімі","Қоғамдық мәселені шешуде жеке адамның рөлі"]
+
+let currentLevel="1-4",wordIndex=0,wordMode="study",wordFlipped=false;
+let state={xp:0,coins:0,done:0,badges:[],streak:1};
+try{state={...state,...JSON.parse(localStorage.getItem("tilqanat-state")||"{}")}}catch(e){}
+const $=id=>document.getElementById(id);
+const lang=()=>document.documentElement.lang||"kk";
+function tr(kk,ru){return lang()==="ru"?ru:kk}
+function saveState(){localStorage.setItem("tilqanat-state",JSON.stringify(state));updateStats()}
+function updateStats(){
+$("xp").textContent=state.xp;$("xp2").textContent=state.xp;$("coins").textContent=state.coins;$("streak").textContent=state.streak;
+let p=Math.min(100,state.done*5);$("progressText").textContent=p;$("progressBar").style.width=p+"%";$("badgeCount").textContent=state.badges.length;
+}
+function toast(s){let t=$("toast");t.textContent=s;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2400)}
+function reward(type){
+const names={word:tr("Сөз мергені","Знаток слов"),reader:tr("Зерделі оқырман","Внимательный читатель"),essay:tr("Эссе шебері","Мастер эссе"),grammar:tr("Грамматика білгірі","Знаток грамматики")};
+if(names[type]&&!state.badges.includes(names[type]))state.badges.push(names[type]);
+state.xp+=10;state.coins+=5;state.done++;saveState();toast(tr("Жарайсың! +10 XP және +5 монета ✨","Отлично! +10 XP и +5 монет ✨"));
+}
+function setLanguage(l){
+document.documentElement.lang=l;
+$("langKK").classList.toggle("active",l==="kk");$("langRU").classList.toggle("active",l==="ru");
+document.querySelectorAll("[data-kk][data-ru]").forEach(el=>{el.textContent=el.dataset[l]});
+localStorage.setItem("tilqanat-language",l);
+if(!$("words").classList.contains("hidden"))renderWords();
+if(!$("quiz").classList.contains("hidden"))renderQuiz();
+if(!$("reader").classList.contains("hidden"))renderReader();
+if(!$("grammar").classList.contains("hidden"))renderGrammar();
+if(!$("essay").classList.contains("hidden"))renderPhrases();
+}
+function setLevel(level,btn){
+currentLevel=level;wordIndex=0;
+document.querySelectorAll("[data-level]").forEach(b=>b.classList.toggle("active",b===btn));
+$("questionCount").textContent=tr("10 сұрақ","10 вопросов");
+closeSections();toast(tr("Деңгей таңдалды: ","Выбран уровень: ")+data[level].level);
+}
+function openSection(id){
+closeSections();$(id).classList.remove("hidden");$(id).scrollIntoView({behavior:"smooth",block:"start"});
+if(id==="words")renderWords();if(id==="reader")renderReader();if(id==="quiz")renderQuiz();if(id==="grammar")renderGrammar();if(id==="essay")renderPhrases();
+}
+function closeSections(){["words","reader","quiz","grammar","essay","speaking"].forEach(id=>$(id).classList.add("hidden"))}
+
+function speakText(text){
+if(!("speechSynthesis" in window)){toast(tr("Бұл браузер аудио оқуды қолдамайды.","Этот браузер не поддерживает озвучивание."));return}
+speechSynthesis.cancel();
+const voices=speechSynthesis.getVoices();
+const voice=voices.find(v=>/^kk([_-]|$)/i.test(v.lang))||voices.find(v=>/kazakh|қазақ/i.test(v.name));
+if(!voice){
+$("speechResult").textContent=tr("Қазақша диктор бұл құрылғыда табылмады. Орысша дауыспен оқымаймыз. Құрылғы баптауларынан қазақша дауысты тексер.","Казахский голос не найден на устройстве. Русский голос использоваться не будет. Проверь наличие казахского голоса в настройках устройства.");
+toast(tr("Қазақша дауыс табылмады.","Казахский голос не найден."));return;
+}
+const u=new SpeechSynthesisUtterance(text);u.voice=voice;u.lang=voice.lang||"kk-KZ";u.rate=.88;speechSynthesis.speak(u);
+}
+function currentWords(){return data[currentLevel].words}
+function renderWords(){
+let words=currentWords(),w=words[wordIndex%words.length],area=$("wordArea");
+if(wordMode==="study"){
+area.innerHTML=`<div class="word-card ${wordFlipped?"flipped":""}" onclick="flipWord()"><div class="flip-inner">
+<div class="face"><div class="word-emoji">${w.e}</div><div class="eyebrow">${data[currentLevel].level} · ${wordIndex+1}/${words.length}</div><h3>${w.k}</h3><p>${tr("Аудармасын көру үшін карточканы бас.","Нажми на карточку, чтобы увидеть перевод.")}</p><button class="small-btn" onclick="event.stopPropagation();speakText('${w.k}')">🔊 ${tr("Тыңдау","Слушать")}</button></div>
+<div class="face back"><div class="eyebrow">${tr("Орысша аудармасы","Перевод на русский")}</div><h3>${w.r}</h3><p><b>${tr("Синонимі:","Синоним:")}</b> ${w.syn}</p><p><b>${tr("Мысал:","Пример:")}</b> ${w.ex}</p></div></div></div>
+<div class="card-controls"><button class="small-btn" onclick="prevWord()">← ${tr("Алдыңғы","Назад")}</button><button class="small-btn dark" onclick="flipWord()">${tr("Аудару ↻","Перевернуть ↻")}</button><button class="small-btn" onclick="nextWord()">${tr("Келесі →","Далее →")}</button><button class="small-btn" onclick="reward('word')">✓ +10 XP</button></div>`;
+}else{
+let opts=[w,...words.filter(x=>x.k!==w.k).sort(()=>Math.random()-.5).slice(0,3)].sort(()=>Math.random()-.5);
+area.innerHTML=`<div class="reader-col" style="text-align:center"><div class="word-emoji">${w.e}</div><h2>${w.k}</h2><p>${tr("Дұрыс аудармасын таңда.","Выбери правильный перевод.")}</p></div><div class="answer-list">${opts.map(x=>`<button class="answer" onclick="wordAnswer('${x.r.replace(/'/g,"\\'")}','${w.r.replace(/'/g,"\\'")}',this)">${x.r}</button>`).join("")}</div><div class="card-controls"><button class="small-btn" onclick="nextWord()">${tr("Келесі сөз →","Следующее слово →")}</button><button class="small-btn" onclick="reward('word')">+10 XP</button></div><div id="wordFeedback" class="notice">${tr("Дұрыс жұпты тап.","Найди правильную пару.")}</div>`;
+}
+}
+function flipWord(){wordFlipped=!wordFlipped;renderWords()}
+function nextWord(){wordIndex=(wordIndex+1)%currentWords().length;wordFlipped=false;renderWords()}
+function prevWord(){wordIndex=(wordIndex+currentWords().length-1)%currentWords().length;wordFlipped=false;renderWords()}
+function setWordMode(m,b){wordMode=m;document.querySelectorAll("#words .filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderWords()}
+function wordAnswer(a,c,b){if(a===c){b.classList.add("correct");$("wordFeedback").textContent=tr("Дұрыс! Жарайсың!","Верно! Молодец!");reward("word")}else{b.classList.add("wrong");$("wordFeedback").textContent=tr("Қайта ойланып көр. Дұрыс жауап: ","Попробуй ещё раз. Правильный ответ: ")+c}}
+
+const readerVocab={
+"Табиғат":"природа","адам":"человек","өмірінің":"жизни","негізі":"основа","Орман":"лес","ауаны":"воздух","тазартады":"очищает","өзен":"река","көл":"озеро","тіршілікке":"жизни","нәр":"питание","береді":"даёт","Сондықтан":"поэтому","табиғи":"природные","байлықтарды":"богатства","қорғау":"защищать","суды":"воду","үнемдеу":"экономить",
+"Айдана":"Айдана","мектепке":"в школу","барады":"идёт","Оның":"у неё","сөмкесінде":"в сумке","кітап":"книга","дәптер":"тетрадь","және":"и","қалам":"ручка","бар":"есть","Сабақтан":"после уроков","кейін":"после","ол":"она","досымен":"с другом","ойнайды":"играет",
+"Қазіргі":"современном","қоғамда":"обществе","ақпаратты":"информацию","дұрыс":"правильно","бағалау":"оценивать","қабілеті":"способность","ерекше":"особое","маңызға":"значение","ие":"имеет","Ақпараттың":"информации","көп":"много","болуы":"наличие","оның":"её","бәрі":"вся","сенімді":"достоверная","дегенді":"означает","білдірмейді":"не означает","оқырман":"читатель","дереккөзді":"источники","салыстырып":"сравнивая","дәлелді":"доказательства","тексеріп":"проверяя","автордың":"автора","мақсатын":"цель","анықтауы":"определить","қажет":"необходимо","Сыни":"критическое","ойлау":"мышление","саналы":"осознанное","шешім":"решение","қабылдауға":"принимать","көмектеседі":"помогает"
 };
-const SPEAK={
-a1:[["Өзіңді таныстыр","Атыңды, жасыңды, қайда оқитыныңды айт.","Сәлем! Менің атым ... Мен ... жастамын. Мен мектепте оқимын."],["Отбасыңды таныстыр","Отбасы мүшелерін ата.","Менің отбасымда ... адам бар. Менің анам ... ."],["Досың туралы айт","Досыңның атын және мінезін сипатта.","Менің досымның аты ... . Ол мейірімді."],["Мектебіңді сипатта","Мектебің туралы екі-үш сөйлем айт.","Менің мектебім ... . Мен ... пәнін жақсы көремін."],["Дүкенде","Қажетті затты сыпайы сұра.","Сәлеметсіз бе! Маған ... беріңізші."],["Ауа райы","Бүгінгі ауа райын сипатта.","Бүгін күн ... . Ауа райы ... ."],["Күн тәртібі","Таңертең не істейтініңді айт.","Мен таңертең ... . Содан кейін ... ."],["Сүйікті тағам","Қандай тағам ұнайтынын түсіндір.","Менің сүйікті тағамым ... . Ол ... ."],["Демалыс","Демалыс күні не істейтініңді айт.","Демалыс күні мен ... ."],["Алғыс айту","Көмек көрсеткен адамға алғыс білдір.","Көмегіңізге көп рақмет!"] ],
-a2:[["Кітапты ұсыну","Оқыған кітабың туралы және оны неге ұсынатыныңды айт.","Мен ... кітабын ұсынар едім, себебі ... ."],["Экология","Табиғатты қорғаудың екі жолын ата.","Менің ойымша, табиғатты қорғау үшін ... ."],["Мамандық","Болашақ мамандығыңды және себебін түсіндір.","Мен ... мамандығын таңдағым келеді, өйткені ... ."],["Пікірталас","Мектеп формасының артықшылығы мен кемшілігін айт.","Бір жағынан ... . Екінші жағынан ... ."],["Дәстүр","Өзің білетін дәстүрдің маңызын түсіндір.","Бұл дәстүрдің маңызы ... ."],["Интернет","Интернетті қауіпсіз қолданудың жолдарын айт.","Ақпаратты бөліспес бұрын ... ."],["Саяхат","Барғың келетін жер туралы әңгімеле.","Мен ... жеріне барғым келеді, себебі ... ."],["Денсаулық","Пайдалы күн тәртібін ұсын.","Денсаулықты сақтау үшін ... ."],["Қоғамға көмектесу","Еріктілік туралы пікір білдір.","Еріктілік маңызды, өйткені ... ."],["Мәтінді талқылау","Мәтіннің негізгі ойы мен дәлелін түсіндір.","Мәтіннің негізгі ойы ... . Автор ... деп есептейді."]],
-b1:[["Әдеби талдау","Кейіпкердің шешімін бағалап, мәтіннен дәлел келтір.","Меніңше, кейіпкердің шешімі ... . Бұған ... эпизоды дәлел."],["Қарсы пікір","Белгілі бір мәселе бойынша тезис пен қарсы уәж айт.","Менің ұстанымым ... . Қарсы тарап ... деуі мүмкін, алайда ... ."],["Медиа сауаттылық","Жалған ақпаратты анықтау жолдарын түсіндір.","Ақпараттың сенімділігін бағалау үшін ... ."],["Тіл саясаты","Ана тілінің қоғамдағы қызметін талқыла.","Ана тілінің маңызы ... . Біріншіден ... ."],["Экологиялық саясат","Жеке және жүйелік шешімдерді салыстыр.","Жеке әрекет ... , ал жүйелік шара ... ."],["Автор позициясы","Автордың ұстанымын қалай анықтайтыныңды түсіндір.","Автор позициясын ... арқылы анықтауға болады."],["Технология","Технологияның білімге әсерін дәлелмен бағала.","Технология ... мүмкіндік береді, бірақ ... ."],["Қоғамдық пікір","Пікірталаста қарсы көзқарасты қалай бағалау керегін айт.","Қарсы пікірді бағалау үшін ... ."],["Кейіпкер эволюциясы","Кейіпкердің өзгеру себептерін түсіндір.","Шығарма басында ... , ал соңында ... ."],["Құндылықтар","Дәстүр мен жаңашылдықтың тепе-теңдігі туралы пікір білдір.","Дәстүр мен жаңашылдықты үйлестіру үшін ... ."]]
+function renderReader(){
+let r=data[currentLevel].reader;
+$("kazText").textContent="";$("ruText").textContent=r.r;
+$("kazText").innerHTML=r.k.split(/(\s+)/).map(t=>{
+if(!t.trim())return t;
+let clean=t.replace(/[.,!?;:]/g,"");
+return `<button class="word" onclick="lookupWord('${clean.replace(/'/g,"\\'")}')">${t}</button>`;
+}).join("");
+$("readerQuestion").textContent=r.q;
+$("readerAnswers").innerHTML=r.a.map((a,i)=>`<button class="small-btn" onclick="readerAnswer(${i},this)">${a}</button>`).join("");
+$("dictionary").textContent=tr("💡 Сөздің мағынасын көру үшін жасыл сөзді бас.","💡 Нажми на зелёное слово, чтобы увидеть перевод.");
+}
+function lookupWord(w){$("dictionary").innerHTML=`📘 <b>${w}</b> — ${readerVocab[w]||tr("Бұл сөздің мағынасын сөйлем контексінен анықта.","Определи значение слова по контексту.")}`}
+function readerAnswer(i,b){let r=data[currentLevel].reader;if(i===r.c){b.classList.add("correct");toast(tr("Дұрыс жауап!","Правильный ответ!"));reward("reader")}else{b.classList.add("wrong");toast(tr("Мәтінді қайта оқып көр.","Перечитай текст ещё раз."))}}
+
+let quizIndex=0,quizScore=0,quizAnswered=false;
+function renderQuiz(){quizIndex=0;quizScore=0;quizAnswered=false;showQuestion()}
+function showQuestion(){
+let qs=data[currentLevel].questions,q=qs[quizIndex];
+$("quizArea").innerHTML=`<div class="stat-head">${tr("Сұрақ","Вопрос")} ${quizIndex+1}/${qs.length} · ${tr("Ұпай","Баллы")}: ${quizScore}</div><div class="progress"><span style="width:${quizIndex/qs.length*100}%"></span></div><h3 style="margin-top:20px">${q.q}</h3><div class="answer-list">${q.a.map((a,i)=>`<button class="answer" onclick="answerQuestion(${i},this)">${a}</button>`).join("")}</div><div id="quizFeedback" class="notice">${tr("Бір жауапты таңда.","Выбери один ответ.")}</div><button id="nextQuestion" class="primary hidden" onclick="nextQuestion()" style="margin-top:12px">${quizIndex===qs.length-1?tr("Нәтижені көру","Посмотреть результат"):tr("Келесі сұрақ →","Следующий вопрос →")}</button>`;
+}
+function answerQuestion(i,b){
+if(quizAnswered)return;quizAnswered=true;let q=data[currentLevel].questions[quizIndex];
+document.querySelectorAll("#quizArea .answer").forEach((x,j)=>{if(j===q.c)x.classList.add("correct")});
+if(i===q.c){quizScore++;$("quizFeedback").textContent=tr("Дұрыс жауап!","Правильный ответ!");reward("word")}else{b.classList.add("wrong");$("quizFeedback").textContent=tr("Дұрыс жауап: ","Правильный ответ: ")+q.a[q.c]}
+$("nextQuestion").classList.remove("hidden");
+}
+function nextQuestion(){quizIndex++;quizAnswered=false;if(quizIndex<data[currentLevel].questions.length)showQuestion();else{
+$("quizArea").innerHTML=`<div class="reader-col" style="text-align:center"><div style="font-size:54px">🏆</div><h2>${tr("Тест аяқталды!","Тест завершён!")}</h2><p>${tr("Нәтижең:","Твой результат:")} <b>${quizScore}/${data[currentLevel].questions.length}</b></p><p>${quizScore>=7?tr("Керемет нәтиже!","Отличный результат!"):tr("Жақсы талпыныс! Қайталап көр.","Хорошая попытка! Попробуй ещё раз.")}</p><button class="primary" onclick="renderQuiz()">${tr("Қайта тапсыру","Пройти ещё раз")}</button></div>`;
+}}
+
+let grammarChosen=[];
+function renderGrammar(){
+grammarChosen=[];let g=data[currentLevel].grammar;
+$("grammarPrompt").textContent=g.q+" «"+g.correct+"»";
+let shuffled=[...g.words].sort(()=>Math.random()-.5);
+$("grammarWords").innerHTML=shuffled.map((w,i)=>`<button class="filter" data-word="${i}" onclick="pickGrammar('${w.replace(/'/g,"\\'")}',this)">${w}</button>`).join("");
+$("grammarFeedback").textContent=tr("Сөздерді дұрыс ретпен таңда.","Выбери слова в правильном порядке.");
+}
+function pickGrammar(w,b){if(grammarChosen.includes(w))return;grammarChosen.push(w);b.classList.add("active");$("grammarFeedback").textContent=grammarChosen.join(" ")}
+function checkGrammar(){let g=data[currentLevel].grammar;if(grammarChosen.join(" ")===g.correct){$("grammarFeedback").textContent=tr("Дұрыс! Жарайсың!","Верно! Молодец!");reward("grammar")}else{$("grammarFeedback").textContent=tr("Әлі дұрыс емес. Қайта реттеп көр.","Пока неверно. Попробуй изменить порядок слов.")}}
+
+const phrases=[
+["Менің ойымша,","По моему мнению,"],
+["Біріншіден,","Во-первых,"],
+["Екіншіден,","Во-вторых,"],
+["Мысалы,","Например,"],
+["Сонымен қатар,","Кроме того,"],
+["Себебі,","Потому что,"],
+["Алайда,","Однако,"],
+["Осыған байланысты,","В связи с этим,"],
+["Қорытындылай келе,","Подводя итог,"],
+["Мен бұл пікірмен келісемін, себебі","Я согласен с этим мнением, потому что"]
+];
+function renderPhrases(){
+$("phrases").innerHTML=phrases.map(p=>`<button class="phrase" onclick="insertPhrase('${p[0].replace(/'/g,"\\'")}')">${p[lang()==="ru"?1:0]}</button>`).join("");
+let saved=localStorage.getItem("tilqanat-essay");if(saved!==null)$("essayText").value=saved;countWords();
+}
+function insertPhrase(p){let ta=$("essayText"),start=ta.selectionStart,end=ta.selectionEnd;ta.value=ta.value.slice(0,start)+(start&&ta.value[start-1]!=="\n"?" ":"")+p+" "+ta.value.slice(end);ta.focus();saveEssay()}
+function addEssayTemplate(){
+let topic=$("essayTopic").value,ta=$("essayText");
+if(ta.value.trim()&&!confirm(tr("Қазіргі мәтінді құрылыммен ауыстырайын ба?","Заменить текущий текст структурой эссе?")))return;
+ta.value=tr("Кіріспе","Введение")+"\n"+topic+" туралы айтқанда, "+tr("менің ойымша, бұл — маңызды тақырып.","по моему мнению, это важная тема.")+"\n\n"+tr("Негізгі бөлім","Основная часть")+"\n"+tr("Біріншіден, ...\nЕкіншіден, ...","Во-первых, ...\nВо-вторых, ...")+"\n\n"+tr("Қорытынды","Заключение")+"\n"+tr("Қорытындылай келе, ...","Подводя итог, ...");
+saveEssay();
+}
+function saveEssay(){localStorage.setItem("tilqanat-essay",$("essayText").value);countWords()}
+function countWords(){let t=$("essayText").value.trim();$("wordCount").textContent=t?t.split(/\s+/).length:0}
+$("essayText").addEventListener("input",saveEssay);
+function copyEssay(){let t=$("essayText").value;if(!t.trim())return toast(tr("Алдымен эссе жаз.","Сначала напиши эссе."));if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(()=>toast(tr("Мәтін көшірілді!","Текст скопирован!"))).catch(()=>fallbackCopy());else fallbackCopy()}
+function fallbackCopy(){let a=$("essayText");a.select();document.execCommand("copy");toast(tr("Мәтін көшірілді.","Текст скопирован."))}
+function finishEssay(){if($("essayText").value.trim().split(/\s+/).filter(Boolean).length<10)return toast(tr("Кемінде 10 сөз жаз.","Напиши не менее 10 слов."));reward("essay")}
+
+function speakAnswer(ok,b){if(ok){b.classList.add("correct");toast(tr("Дұрыс жауап! «Маған нан беріңізші.»","Правильно! «Маған нан беріңізші.»"));reward("word")}else{b.classList.add("wrong");toast(tr("Бұл жауап жағдаятқа сәйкес келмейді.","Этот ответ не подходит к ситуации."))}}
+
+let activeRecognition=null,mediaRecorder=null,recordedChunks=[],recordedUrl=null;
+function startSpeech(){
+const R=window.SpeechRecognition||window.webkitSpeechRecognition,status=$("speechResult");
+if(!R){status.textContent=tr("Бұл браузер қазақша сөйлеуді мәтінге айналдыруды қолдамайды. «Дауысты жазу» батырмасын немесе пернетақтадағы микрофонды қолдан.","Этот браузер не поддерживает распознавание казахской речи. Используй запись аудио или микрофон клавиатуры.");return}
+try{
+activeRecognition=new R();activeRecognition.lang="kk-KZ";activeRecognition.continuous=false;activeRecognition.interimResults=true;
+activeRecognition.onresult=e=>{let s="";for(let i=0;i<e.results.length;i++)s+=e.results[i][0].transcript+(e.results[i].isFinal?" ":"");$("speechTranscript").value=s.trim();status.textContent=tr("Танылған мәтінді төмендегі өрістен тексеріп, түзете аласың.","Проверь и отредактируй распознанный текст в поле ниже.")};
+activeRecognition.onerror=e=>{status.textContent=tr("Микрофон қатесі: ","Ошибка микрофона: ")+(e.error||"unknown")+". "+tr("Сайтқа микрофон рұқсатын беріп, HTTPS арқылы ашылғанын тексер.","Разреши доступ к микрофону и проверь, что сайт открыт через HTTPS.")};
+status.textContent=tr("Тыңдап жатырмын… Қазақша сөйле.","Слушаю… Говори по-казахски.");activeRecognition.start();
+}catch(e){status.textContent=tr("Микрофонды іске қосу мүмкін болмады. Рұқсатты тексер.","Не удалось запустить микрофон. Проверь разрешения.")}}
+async function startRecording(){
+const status=$("speechResult");
+if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){status.textContent=tr("Бұл браузер аудио жазуды қолдамайды. Safari арқылы HTTPS мекенжайында ашып көр.","Браузер не поддерживает запись аудио. Открой сайт через Safari по HTTPS.");return}
+try{
+const stream=await navigator.mediaDevices.getUserMedia({audio:true});recordedChunks=[];
+let options={};if(MediaRecorder.isTypeSupported("audio/mp4"))options.mimeType="audio/mp4";else if(MediaRecorder.isTypeSupported("audio/webm;codecs=opus"))options.mimeType="audio/webm;codecs=opus";
+mediaRecorder=new MediaRecorder(stream,options);
+mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size)recordedChunks.push(e.data)};
+mediaRecorder.onstop=()=>{
+const blob=new Blob(recordedChunks,{type:mediaRecorder.mimeType||"audio/webm"});
+if(recordedUrl)URL.revokeObjectURL(recordedUrl);recordedUrl=URL.createObjectURL(blob);
+$("recordedAudio").src=recordedUrl;$("recordedAudio").classList.remove("hidden");
+stream.getTracks().forEach(t=>t.stop());$("recordBtn").classList.remove("recording");
+status.textContent=tr("Дауыс жазылды. Оны төмендегі ойнатқыштан тыңдай аласың.","Запись готова. Прослушай её в аудиоплеере ниже.");
 };
-const PHRASES={
-a1:["Менің атым ...","Менің ойымша ...","Маған ... ұнайды.","Себебі ...","Сонымен қатар ...","Қорытындылай келе ..."],
-a2:["Менің пікірімше,","Ең алдымен,","Мысалы,","Себебі,","Сонымен қатар,","Бір жағынан,","Екінші жағынан,","Қорытындылай келе,"],
-b1:["Менің ұстанымым бойынша,","Біріншіден,","Бұл тұжырымды ... арқылы негіздеуге болады.","Мысал ретінде ... келтіруге болады.","Қарсы уәж ретінде ...","Дегенмен,","Осыған сүйене отырып,","Қорытындылай келе,"]
-};
-const READING_EXTRA={
-a1:"Мәтіндегі маңызды сөздерді тап. Кейіпкерлерді, орынды немесе әрекетті анықта. Жауапты мәтіннен дәлелмен көрсет.",
-a2:"Мәтіннің негізгі ойын анықта. Автор келтірген себеп пен салдарды ажырат. Өз жауабыңды мәтіндегі ақпаратпен негізде.",
-b1:"Автор ұстанымын, дәлел құрылымын және мәтіннің астарлы мағынасын талда. Қорытындыңды нақты мәтіндік дерекпен негізде."
-};
-let level="a1",tab="vocab",indices={vocab:0,grammar:0,reading:0,quiz:0,writing:0,speaking:0},learned=new Set(JSON.parse(localStorage.getItem("tqLearned")||"[]")),xp=+(localStorage.getItem("tqXP")||0),done=new Set(JSON.parse(localStorage.getItem("tqDone")||"[]")),flipped=false,answered={};
-const key=(t,i)=>level+"-"+t+"-"+i;
-function persist(){localStorage.setItem("tqLearned",JSON.stringify([...learned]));localStorage.setItem("tqXP",xp);localStorage.setItem("tqDone",JSON.stringify([...done]));updateStats()}
-function updateStats(){document.getElementById("xp").textContent=xp+" XP";document.getElementById("learned").textContent=learned.size;document.getElementById("done").textContent=done.size}
-function award(t,i,n=5){let k=key(t,i);if(!done.has(k)){done.add(k);xp+=n;persist()}}
-function setLevel(l){level=l;document.querySelectorAll(".level").forEach(b=>b.classList.toggle("active",b.dataset.level===l));indices={vocab:0,grammar:0,reading:0,quiz:0,writing:0,speaking:0};answered={};flipped=false;let d=LEVELS[l];document.getElementById("levelTag").textContent=d.name;document.getElementById("levelTitle").textContent=d.title;document.getElementById("levelDescription").textContent=d.desc;document.getElementById("ruleBox").textContent=d.rule;renderCurrent();updateStats()}
-function showTab(t){tab=t;document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("hidden",p.id!==t));document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));renderCurrent();window.scrollTo({top:0,behavior:"smooth"})}
-function renderCurrent(){renderVocab();renderGrammar();renderReading();renderQuiz();renderWriting();renderSpeaking();document.getElementById("vCount").textContent=WORDS[level].length;document.getElementById("gCount").textContent=GRAMMAR[level].length;document.getElementById("rCount").textContent=READINGS[level].length;document.getElementById("qCount").textContent=WORDS[level].length;document.getElementById("wCount").textContent=WRITING[level].length;document.getElementById("sCount").textContent=SPEAK[level].length}
-function renderVocab(){let list=WORDS[level],i=indices.vocab%list.length,w=list[i];document.getElementById("vocabPosition").textContent=(i+1)+" / "+list.length;document.getElementById("vocabBar").style.width=((i+1)/list.length*100)+"%";document.getElementById("wordTag").textContent=LEVELS[level].name;document.getElementById("wordKK").textContent=w.kk;document.getElementById("wordRU").textContent=w.ru.replace(";"," / ");document.getElementById("wordEX").textContent=w.ex;document.getElementById("wordRU").classList.toggle("hidden",!flipped);document.getElementById("wordEX").classList.toggle("hidden",!flipped);document.getElementById("flipHint").textContent=flipped?"Аудармасы мен мысалы":"Аудармасын көру үшін карточканы бас";let pool=list.filter(x=>x.kk!==w.kk).sort(()=>Math.random()-.5).slice(0,3);let opts=[w,...pool].sort(()=>Math.random()-.5);let box=document.getElementById("vocabOptions");box.innerHTML="";document.getElementById("vocabQuestion").textContent="«"+w.kk+"» сөзінің аудармасын таңда.";opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o.ru.replace(";"," / ");b.onclick=()=>{if(answered[key("vocab",i)])return;answered[key("vocab",i)]=true;box.querySelectorAll("button").forEach(x=>x.disabled=true);if(o===w){b.classList.add("correct");document.getElementById("vocabFeedback").textContent="Дұрыс! +5 XP";award("vocab",i,5)}else{b.classList.add("wrong");document.getElementById("vocabFeedback").textContent="Дұрыс жауап: "+w.ru.replace(";"," / ")}};box.appendChild(b)});document.getElementById("vocabFeedback").textContent=answered[key("vocab",i)]?"Бұл сөзге жауап бердің.":""}
-function flipWord(){flipped=!flipped;renderVocab()}
-function moveWord(d){indices.vocab=(indices.vocab+d+WORDS[level].length)%WORDS[level].length;flipped=false;renderVocab()}
-function speak(text){if(!window.speechSynthesis){alert("Бұл браузер дыбыстауды қолдамайды.");return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.lang="kk-KZ";u.rate=.85;speechSynthesis.speak(u)}
-function speakCurrent(){speak(WORDS[level][indices.vocab].kk)}
-function learnWord(){let w=WORDS[level][indices.vocab];let id=level+"-"+w.kk;if(!learned.has(id)){learned.add(id);xp+=5;persist()}moveWord(1)}
-function renderGrammar(){let i=indices.grammar%GRAMMAR[level].length,t=GRAMMAR[level][i];document.getElementById("grammarPosition").textContent=(i+1)+" / "+GRAMMAR[level].length;document.getElementById("grammarBar").style.width=((i+1)/GRAMMAR[level].length*100)+"%";document.getElementById("grammarTag").textContent=level==="a1"?"Негізгі грамматика":level==="a2"?"Орта деңгей грамматикасы":"Күрделі тілдік талдау";document.getElementById("grammarQuestion").textContent=t[0];document.getElementById("grammarHint").textContent="Нұсқалардың бірін таңда.";document.getElementById("ruleBox").textContent=LEVELS[level].rule;let box=document.getElementById("grammarOptions");box.innerHTML="";t[1].forEach((a,j)=>{let b=document.createElement("button");b.className="option";b.textContent=a;b.onclick=()=>{if(answered[key("grammar",i)])return;answered[key("grammar",i)]=true;box.querySelectorAll("button").forEach((x,k)=>{x.disabled=true;if(k===t[2])x.classList.add("correct")});if(j===t[2]){document.getElementById("grammarFeedback").textContent="Дұрыс жауап! "+t[3];award("grammar",i,10)}else{b.classList.add("wrong");document.getElementById("grammarFeedback").textContent="Қайта оқып көр. "+t[3]}document.getElementById("grammarNext").disabled=false};box.appendChild(b)});document.getElementById("grammarFeedback").textContent=answered[key("grammar",i)]?"Бұл тапсырма орындалды.":"";document.getElementById("grammarNext").disabled=!answered[key("grammar",i)]}
-function nextGrammar(){indices.grammar=(indices.grammar+1)%GRAMMAR[level].length;renderGrammar()}
-function renderReading(){let i=indices.reading%READINGS[level].length,r=READINGS[level][i];document.getElementById("readingPosition").textContent=(i+1)+" / "+READINGS[level].length;document.getElementById("readingBar").style.width=((i+1)/READINGS[level].length*100)+"%";document.getElementById("readingTag").textContent=LEVELS[level].name+" · Оқылым";document.getElementById("readingTitle").textContent=r[0];document.getElementById("readingText").textContent=r[1];document.getElementById("readingRussian").classList.add("hidden");document.getElementById("readingRussian").textContent=READING_EXTRA[level];document.getElementById("dictionary").textContent=READING_EXTRA[level];document.getElementById("readingQuestion").textContent=r[2];let box=document.getElementById("readingOptions");box.innerHTML="";r[3].forEach((a,j)=>{let b=document.createElement("button");b.className="option";b.textContent=a;b.onclick=()=>{if(answered[key("reading",i)])return;answered[key("reading",i)]=true;box.querySelectorAll("button").forEach((x,k)=>{x.disabled=true;if(k===r[4])x.classList.add("correct")});if(j===r[4]){b.classList.add("correct");document.getElementById("readingFeedback").textContent="Дұрыс! Мәтінді түсіндің. +10 XP";award("reading",i,10)}else{b.classList.add("wrong");document.getElementById("readingFeedback").textContent="Дұрыс жауап: "+r[3][r[4]]}document.getElementById("readingNext").disabled=false};box.appendChild(b)});document.getElementById("readingFeedback").textContent=answered[key("reading",i)]?"Бұл сұраққа жауап бердің.":"";document.getElementById("readingNext").disabled=!answered[key("reading",i)]}
-function nextReading(){indices.reading=(indices.reading+1)%READINGS[level].length;renderReading()}
-function speakReading(){speak(READINGS[level][indices.reading][1])}
-function toggleRussian(){let el=document.getElementById("readingRussian");el.classList.toggle("hidden");if(!el.classList.contains("hidden"))el.textContent=level==="a1"?"Оқып, мәтіндегі таныс сөздерді белгіле.":level==="a2"?"Мәтінді оқы. Негізгі ойды, себеп пен салдарды ажырат.":"Мәтіннің идеясы мен автор ұстанымын талда. Жауабыңды нақты дерекпен негізде."}
-function renderQuiz(){let i=indices.quiz%WORDS[level].length,w=WORDS[level][i];document.getElementById("quizPosition").textContent=(i+1)+" / "+WORDS[level].length;document.getElementById("quizBar").style.width=((i+1)/WORDS[level].length*100)+"%";document.getElementById("quizQuestion").textContent=level==="a1"?"«"+w.kk+"» сөзінің аудармасын таңда.":level==="a2"?"Сөздік мағынаны анықта: «"+w.kk+"».":"Тілдік ұғымды анықта: «"+w.kk+"».";let pool=WORDS[level].filter(x=>x!==w).sort(()=>Math.random()-.5).slice(0,3),opts=[w,...pool].sort(()=>Math.random()-.5),box=document.getElementById("quizOptions");box.innerHTML="";opts.forEach(o=>{let b=document.createElement("button");b.className="option";b.textContent=o.ru.replace(";"," / ");b.onclick=()=>{if(answered[key("quiz",i)])return;answered[key("quiz",i)]=true;box.querySelectorAll("button").forEach(x=>x.disabled=true);if(o===w){b.classList.add("correct");document.getElementById("quizFeedback").textContent="Дұрыс! +10 XP";award("quiz",i,10)}else{b.classList.add("wrong");document.getElementById("quizFeedback").textContent="Дұрыс жауап: "+w.ru.replace(";"," / ")}document.getElementById("quizNext").disabled=false};box.appendChild(b)});document.getElementById("quizFeedback").textContent="";document.getElementById("quizNext").disabled=!!answered[key("quiz",i)];document.getElementById("quizRestart").classList.add("hidden");document.getElementById("quizNext").classList.remove("hidden")}
-function nextQuiz(){if(indices.quiz===WORDS[level].length-1){document.getElementById("quizQuestion").textContent="Бұл деңгейдегі сөздік тест аяқталды!";document.getElementById("quizOptions").innerHTML="";document.getElementById("quizFeedback").textContent="Қаласаң, тестті қайта бастауға болады.";document.getElementById("quizNext").classList.add("hidden");document.getElementById("quizRestart").classList.remove("hidden");return}indices.quiz++;renderQuiz()}
-function startQuiz(){indices.quiz=0;renderQuiz()}
-function renderWriting(){let i=indices.writing%WRITING[level].length;document.getElementById("writingPosition").textContent=(i+1)+" / "+WRITING[level].length;document.getElementById("writingTag").textContent=LEVELS[level].name+" · Жазылым";document.getElementById("writingTitle").textContent=WRITING[level][i];document.getElementById("writingInstructions").textContent=level==="a1"?"Тақырып туралы 3–5 қарапайым сөйлем жаз.":level==="a2"?"Өз пікіріңді, кемінде екі дәлелді және қорытындыны жаз.":"Тезис ұсын, дәлел мен мысал келтір, қажет болса қарсы уәжді қарастырып, қорытынды жаса.";document.getElementById("writingPlan").textContent=level==="a1"?"Жоспар: 1) Тақырыпты ата. 2) Екі мәлімет жаз. 3) Қорытынды сөйлем жаз.":level==="a2"?"Жоспар: 1) Кіріспе. 2) Пікір және екі дәлел. 3) Қорытынды.":"Жоспар: 1) Тезис. 2) Аргументтер мен мәтіндік/өмірлік мысал. 3) Қарсы уәжге жауап. 4) Қорытынды.";document.getElementById("writingText").value=localStorage.getItem("tqDraft-"+level+"-"+i)||"";updateWritingCount();let box=document.getElementById("writingChips");box.innerHTML="";PHRASES[level].forEach(p=>{let b=document.createElement("button");b.className="chip";b.textContent=p;b.onclick=()=>{let ta=document.getElementById("writingText");ta.value+=(ta.value&&!ta.value.endsWith(" ")?" ":"")+p+" ";ta.focus();updateWritingCount()};box.appendChild(b)});document.getElementById("writingFeedback").textContent=""}
-function updateWritingCount(){let t=document.getElementById("writingText").value.trim();document.getElementById("writingCount").textContent=(t?t.split(/\s+/).length:0)+" сөз"}
-document.getElementById("writingText").addEventListener("input",updateWritingCount);
-function checkWriting(){let t=document.getElementById("writingText").value.trim(),n=t?t.split(/\s+/).length:0,min=level==="a1"?15:level==="a2"?50:100;if(n<min){document.getElementById("writingFeedback").textContent="Мәтінді толықтыр. Осы тапсырмаға кемінде "+min+" сөз жазуға тырыс.";return}let checks=[["Кіріспе",/менің ойымша|бұл тақырып|қазіргі кезде|мен/i.test(t)],["Байланыстырушы тіркес",/себебі|сонымен қатар|біріншіден|алайда|мысалы|дегенмен/i.test(t)],["Қорытынды",/қорытындылай келе|сондықтан|демек|қорыта айтқанда/i.test(t)]];document.getElementById("writingFeedback").textContent="Сөз саны: "+n+". Құрылым бойынша тексер: "+checks.map(x=>x[0]+(x[1]?" ✓":" — толықтыр")).join("; ")+". Бұл автоматты бастапқы тексеру, мұғалім бағасын алмастырмайды.";award("writing",indices.writing,10)}
-function saveWriting(){localStorage.setItem("tqDraft-"+level+"-"+indices.writing,document.getElementById("writingText").value);document.getElementById("writingFeedback").textContent="Жоба осы құрылғыда сақталды."}
-function nextWriting(){indices.writing=(indices.writing+1)%WRITING[level].length;renderWriting()}
-function renderSpeaking(){let i=indices.speaking%SPEAK[level].length,s=SPEAK[level][i];document.getElementById("speakingPosition").textContent=(i+1)+" / "+SPEAK[level].length;document.getElementById("speakingBar").style.width=((i+1)/SPEAK[level].length*100)+"%";document.getElementById("speakingTag").textContent=LEVELS[level].name+" · Айтылым";document.getElementById("speakingTitle").textContent=s[0];document.getElementById("speakingInstructions").textContent=s[1];document.getElementById("speakingModel").textContent="Сөйлеу үлгісі: "+s[2];document.getElementById("speakingText").value="";document.getElementById("speakingFeedback").textContent=""}
-function speakModel(){speak(SPEAK[level][indices.speaking][2])}
-function checkSpeaking(){let t=document.getElementById("speakingText").value.trim(),n=t?t.split(/\s+/).length:0,min=level==="a1"?5:level==="a2"?15:25;if(n<min){document.getElementById("speakingFeedback").textContent="Жауабыңды толықтыр. Кемінде "+min+" сөз жазып, дауыстап айтып көр.";return}document.getElementById("speakingFeedback").textContent="Жақсы! Енді жауабыңды дауыстап оқы. Бұл автоматты тексеру сөз санын ғана бағалайды.";award("speaking",indices.speaking,10)}
-function nextSpeaking(){indices.speaking=(indices.speaking+1)%SPEAK[level].length;renderSpeaking()}
-function resetAll(){if(!confirm("Барлық XP, орындалған тапсырма және үйренген сөздер өшірілсін бе?"))return;xp=0;learned.clear();done.clear();answered={};localStorage.removeItem("tqXP");localStorage.removeItem("tqLearned");localStorage.removeItem("tqDone");Object.keys(localStorage).filter(k=>k.startsWith("tqDraft-")).forEach(k=>localStorage.removeItem(k));persist();renderCurrent()}
-renderCurrent();updateStats();
+mediaRecorder.start();$("recordBtn").classList.add("recording");
+status.textContent=tr("Жазып жатырмын… Сөйлеп болған соң тоқтату батырмасын бас.","Идёт запись… Когда закончишь говорить, нажми «Остановить запись».");
+}catch(e){status.textContent=tr("Микрофонға рұқсат берілмеді немесе микрофон бос емес. Браузер баптауларын тексер.","Нет доступа к микрофону или он занят. Проверь настройки браузера.")}}
+function stopRecording(){if(mediaRecorder&&mediaRecorder.state!=="inactive")mediaRecorder.stop();else $("speechResult").textContent=tr("Қазір белсенді жазба жоқ.","Сейчас нет активной записи.")}
+
+$("essayTopic").addEventListener("change",()=>{});
+updateStats();
+setLanguage(localStorage.getItem("tilqanat-language")||"kk");
 </script>
 </body>
 </html>
